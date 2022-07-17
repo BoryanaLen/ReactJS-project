@@ -186,6 +186,7 @@ a:focus {
 a {
 	text-decoration: none;
 }
+
 .form-control {
 	border-color: #e3e3e3;
     box-shadow: none;
@@ -2186,6 +2187,9 @@ table.dataTable thead > tr > td.sorting {
 /*-----------------
 	14. Select2
 -----------------------*/
+.select2-container{
+    width: 100%;
+}
 
 .select2-container .select2-selection--single {
     border: 1px solid #e3e3e3;

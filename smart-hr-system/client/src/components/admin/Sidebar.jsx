@@ -49,17 +49,16 @@ export const Sidebar = (props) => {
                 }
                 </li>            
                 <li className="submenu" >             
-                <a href="#" className= {isSideMenu == "employee" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu =="employee" ? "": "employee")}><i className="la la-user" /> <span className="noti-dot"> Employees</span> <span className="menu-arrow" /></a>
+                <a href="#" className= {isSideMenu == "employee" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu =="employee" ? "": "employee")}><i className="la la-user" /> <span> Employees</span> <span className="menu-arrow" /></a>
                 { isSideMenu == "employee" ? 
                 
                 <ul >
                     <li><Link className={pathname.includes('allemployees') ?"active" :pathname.includes('employees-list') ?"active" :""} 
-                        to="/app/employee/allemployees">All Employees</Link></li>
+                        to="/allemployees">All Employees</Link></li>
                     <li><Link className={pathname.includes('holidays') ?"active" :""} to="/app/employee/holidays">Holidays</Link></li>
                     <li><Link className={pathname.includes('es-admin') ?"active" :""} to="/app/employee/leaves-admin">Leaves <span className="badge badge-pill bg-primary float-end">1</span></Link></li>
                     <li><Link className={pathname.includes('e-settings') ?"active" :""} to="/app/employee/leave-settings">Leave Settings</Link></li>
-                    <li><Link className={pathname.includes('nce-admin') ?"active" :""} to="/app/employee/attendance-admin">Attendance</Link></li>
-                    <li><Link className={pathname.includes('departments') ?"active" :""} to="/app/employee/departments">Departments</Link></li>
+                    <li><Link className={pathname.includes('nce-admin') ?"active" :""} to="/app/employee/attendance-admin">Attendance</Link></li>            
                     <li><Link className={pathname.includes('timesheet') ?"active" :""} to="/app/employee/timesheet">Timesheet</Link></li>
                     <li><Link className={pathname.includes('shift-scheduling') || pathname.includes('shift-list') ?"active" :""} 
                         to="/app/employee/shift-scheduling">Shift &amp; Schedule</Link></li>
