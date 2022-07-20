@@ -8,7 +8,6 @@ export const Sidebar = (props) => {
     const [isSideMenu, setSideMenu] = useState("")
 
     const toggleSidebar = (value) => {
-    console.log (value);
     setSideMenu(value);
     
     }
