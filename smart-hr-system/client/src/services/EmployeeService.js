@@ -12,7 +12,7 @@ async function getEmployees() {
 class EmployeeService{
 
     async  getAll () {
-        getEmployees();
+       return getEmployees();
     };
 }
 
