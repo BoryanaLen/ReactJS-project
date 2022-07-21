@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import EmployeeService from "../../../services/EmployeeService";
+import * as EmployeeService  from "../../../services/EmployeeService";
 import { Avatar_02 } from "../../../assets/imagepath"
 import { Link, WithRouter } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const EmployeeList = (props) => {
     useEffect(() => {
         setLoading(true)
         EmployeeService
-            .getAll()
+            .getEmployees()
             .then((data) => {
                 setEmployees(data)
             })
