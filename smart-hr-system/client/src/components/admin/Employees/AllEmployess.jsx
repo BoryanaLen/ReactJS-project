@@ -1,24 +1,10 @@
-
 import '../../../assets/css/select2.min.css'
-
-import React, { useEffect, useState } from 'react';
-import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
-import $ from 'jquery'
 import { Addemployee } from "./Addemployee"
 import { Editemployee } from "./Editemployee"
 import EmployeeList from './EmployeeList';
 
 export const AllEmployees = () => {
-
-    useEffect(() => {
-        if ($('.select').length > 0) {
-            $('.select').select({
-                minimumResultsForSearch: -1,
-                width: '100%'
-            });
-        }
-    });
 
     return (
         <div className="content container-fluid">
