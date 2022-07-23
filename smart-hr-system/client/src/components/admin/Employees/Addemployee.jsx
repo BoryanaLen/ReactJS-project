@@ -1,7 +1,48 @@
-  
-  import React from 'react';
+  import { useState } from 'react';
+  import * as EmployeeService  from "../../../services/EmployeeService";
 
   export const Addemployee = () => {
+
+    const [errors, setErrors] = useState({});
+    const [employees, setEmployees] = useState([]);
+    const [employeeData, setEmployeeData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        department: '',
+        position: '',
+        joinDate: '',
+        address: ''
+    });
+
+    const changeHandler = (e) => {
+        setEmployeeData(state => ({
+            ...state,
+            [e.target.name]: e.target.value
+        }));
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        EmployeeService
+            .addEmployee(employeeData)
+            .then(empl => {
+                setEmployees(oldEmployees => [...oldEmployees, empl]);
+            })
+            .catch(err => {
+                console.log(err);
+            });                 
+    };
+
+
+    const minLength = (e, bound) => {
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: employeeData[e.target.name].length < bound,
+        }));
+    }
     
     return ( 
        <div id="add_employee" className="modal custom-modal fade" role="dialog">
@@ -10,73 +51,51 @@
                <div className="modal-header">
                  <h5 className="modal-title">Add Employee</h5>
                  <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                   <span aria-hidden="true">×</span>
+                   <span aria-hidden="true">x</span>
                  </button>
                </div>
                <div className="modal-body">
-                 <form>
+                 <form onSubmit={submitHandler}>
                    <div className="row">
                      <div className="col-sm-6">
                        <div className="form-group">
-                         <label className="col-form-label">First Name <span className="text-danger">*</span></label>
-                         <input className="form-control" type="text" />
+                         <label className="col-form-label" htmlFor="firstName">First Name <span className="text-danger">*</span></label>
+                         <input className="form-control" id="firstName" name="firstName" type="text" value={employeeData.firstName} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
+                            {errors.streetNumber &&
+                                <p className="form-error">
+                                    First name should be at least 3 symbols!
+                                </p>
+                            }
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
-                         <label className="col-form-label">Last Name</label>
-                         <input className="form-control" type="text" />
+                         <label className="col-form-label" htmlFor="lastName">Last Name <span className="text-danger">*</span></label>
+                         <input className="form-control" id="lastName" name='lastName' type="text" value={employeeData.lastName} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
-                         <label className="col-form-label">Username <span className="text-danger">*</span></label>
-                         <input className="form-control" type="text" />
-                       </div>
-                     </div>
-                     <div className="col-sm-6">
-                       <div className="form-group">
-                         <label className="col-form-label">Email <span className="text-danger">*</span></label>
-                         <input className="form-control" type="email" />
-                       </div>
-                     </div>
-                     <div className="col-sm-6">
-                       <div className="form-group">
-                         <label className="col-form-label">Password</label>
-                         <input className="form-control" type="password" />
-                       </div>
-                     </div>
-                     <div className="col-sm-6">
-                       <div className="form-group">
-                         <label className="col-form-label">Confirm Password</label>
-                         <input className="form-control" type="password" />
+                         <label className="col-form-label" htmlFor="email">Email <span className="text-danger">*</span></label>
+                         <input className="form-control" id="email" name="email" type="email" value={employeeData.email} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
                        </div>
                      </div>
                      <div className="col-sm-6">  
                        <div className="form-group">
-                         <label className="col-form-label">Employee ID <span className="text-danger">*</span></label>
-                         <input type="text" className="form-control" />
+                         <label className="col-form-label" htmlFor="address">Address <span className="text-danger">*</span></label>
+                         <input type="text" className="form-control" id="address" name='address' value={employeeData.address} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
                        </div>
                      </div>
                      <div className="col-sm-6">  
                        <div className="form-group">
-                         <label className="col-form-label">Joining Date <span className="text-danger">*</span></label>
-                         <div><input className="form-control datetimepicker" type="date" /></div>
+                         <label className="col-form-label" htmlFor="joinDate">Joining Date <span className="text-danger">*</span></label>
+                         <div><input className="form-control datetimepicker" type="date" id='joinDate' name='joinDate' value={employeeData.joinDate} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/></div>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
-                         <label className="col-form-label">Phone </label>
-                         <input className="form-control" type="text" />
-                       </div>
-                     </div>
-                     <div className="col-sm-6">
-                       <div className="form-group">
-                         <label className="col-form-label">Company</label>
-                         <select className="select">
-                           <option value>Global Technologies</option>
-                           <option value={1}>Delta Infotech</option>
-                         </select>
+                         <label className="col-form-label" htmlFor="phoneNumber">Phone <span className="text-danger">*</span></label>
+                         <input className="form-control" type="text" id='phoneNumber' name='phoneNumber'  value={employeeData.phoneNumber} onChange={changeHandler} onBlur={(e) => minLength(e, 5)}/>
                        </div>
                      </div>
                      <div className="col-md-6">
@@ -92,200 +111,15 @@
                      </div>
                      <div className="col-md-6">
                        <div className="form-group">
-                         <label>Designation <span className="text-danger">*</span></label>
+                         <label>Position <span className="text-danger">*</span></label>
                          <select className="select">
-                           <option>Select Designation</option>
+                           <option>Select Position</option>
                            <option>Web Designer</option>
                            <option>Web Developer</option>
                            <option>Android Developer</option>
                          </select>
                        </div>
                      </div>
-                   </div>
-                   <div className="table-responsive m-t-15">
-                     <table className="table table-striped custom-table">
-                       <thead>
-                         <tr>
-                           <th>Module Permission</th>
-                           <th className="text-center">Read</th>
-                           <th className="text-center">Write</th>
-                           <th className="text-center">Create</th>
-                           <th className="text-center">Delete</th>
-                           <th className="text-center">Import</th>
-                           <th className="text-center">Export</th>
-                         </tr>
-                       </thead>
-                       <tbody>
-                         <tr key={1}>
-                           <td>Holidays</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={2}>
-                           <td>Leaves</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={3}>
-                           <td>Clients</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={4}>
-                           <td>Projects</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={5}>
-                           <td>Tasks</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={6}>
-                           <td>Chats</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={7}>
-                           <td>Assets</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                         <tr key={8}>
-                           <td>Timing Sheets</td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input defaultChecked type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                           <td className="text-center">
-                             <input type="checkbox" />
-                           </td>
-                         </tr>
-                       </tbody>
-                     </table>
                    </div>
                    <div className="submit-section">
                      <button className="btn btn-primary submit-btn">Submit</button>

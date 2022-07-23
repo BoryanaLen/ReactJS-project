@@ -39,7 +39,7 @@ const EmployeeList = (props) => {
                                 <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_employee"><i className="fa fa-trash-o m-r-5" /> Delete</a>
                             </div>
                         </div>
-                        <h4 className="user-name m-t-10 mb-0 text-ellipsis"><Link to="/app/profile/employee-profile">{ employee.name }</Link></h4>
+                        <h4 className="user-name m-t-10 mb-0 text-ellipsis"><Link to="/app/profile/employee-profile">{ employee.firstName + " " + employee.lastName  }</Link></h4>
                         <div className="small text-muted">{ employee.position }</div>
                     </div>
                 ))}
