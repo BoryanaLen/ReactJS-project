@@ -1,10 +1,41 @@
-import '../../../assets/css/select2.min.css'
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Addemployee } from "./Addemployee"
 import { Editemployee } from "./Editemployee"
-import EmployeeList from './EmployeeList';
+import * as EmployeeService  from "../../../services/EmployeeService";
+import { Avatar_02 } from "../../../assets/imagepath"
 
 export const AllEmployees = () => {
+
+    const [loading, setLoading] = useState(false)
+    const [employees, setEmployees] = useState([]);
+    const [employeeAction, setEmployeeAction] = useState({ employee: null, action: null });
+
+    useEffect(() => {
+        setLoading(true)
+        EmployeeService
+            .getEmployees()
+            .then((data) => {
+                setEmployees(data)
+            })
+            .finally(() => setLoading(false))
+    }, [])
+
+    const closeHandler = () => {
+        setEmployeeAction({ employee: null, action: null });
+    };
+
+    const employeeCreateHandler = (employeeData) => {
+            EmployeeService
+            .addEmployee(employeeData)
+            .then(employee => {
+                setEmployees(oldEmployees => [...oldEmployees, employee]);
+                closeHandler();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
     return (
         <div className="content container-fluid">
@@ -81,12 +112,31 @@ export const AllEmployees = () => {
             </div>
             {/* Search Filter */}
             <div className="row staff-grid-row">
-
-                < EmployeeList />
-                
+                { employees &&
+                    employees.map((employee, index) => (
+                        <div className="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">     
+                        <div className="profile-widget">
+                        <div className="profile-img">
+                            <Link to="/app/profile/employee-profile" className="avatar"><img src={Avatar_02} alt="" /></Link>
+                        </div>
+                        <div className="dropdown profile-action">
+                            <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><i className="material-icons">more_vert</i></a>
+                            <div className="dropdown-menu dropdown-menu-right">
+                                <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_employee"><i className="fa fa-pencil m-r-5" /> Edit</a>
+                                <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_employee"><i className="fa fa-trash-o m-r-5" /> Delete</a>
+                            </div>
+                        </div>
+                        <h4 className="user-name m-t-10 mb-0 text-ellipsis"><Link to="/app/profile/employee-profile">{ employee.firstName + " " + employee.lastName  }</Link></h4>
+                        <div className="small text-muted">{ employee.position }</div>
+                    </div>
+                    </div>
+                ))}            
             </div>
 
-            <Addemployee />
+            <Addemployee 
+                onClose={closeHandler}
+                onUserCreate={employeeCreateHandler}
+            />
 
             <Editemployee />
 
