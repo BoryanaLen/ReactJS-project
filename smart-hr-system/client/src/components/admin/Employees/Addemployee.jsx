@@ -61,7 +61,7 @@
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="firstName">First Name <span className="text-danger">*</span></label>
                          <input className="form-control" id="firstName" name="firstName" type="text" value={employeeData.firstName} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
-                            {errors.streetNumber &&
+                            {errors.firstName &&
                                 <p className="form-error">
                                     First name should be at least 3 symbols!
                                 </p>
@@ -122,7 +122,7 @@
                      </div>
                    </div>
                    <div className="submit-section">
-                     <button className="btn btn-primary submit-btn">Submit</button>
+                     <button className="btn btn-primary submit-btn" data-bs-dismiss="modal" aria-label="Close">Submit</button>
                    </div>
                  </form>
                </div>
