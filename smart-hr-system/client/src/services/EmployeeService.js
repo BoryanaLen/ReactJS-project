@@ -1,5 +1,5 @@
 import db from './firebase'
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 
 const dbRef = collection(db, "employees");
 
@@ -21,9 +21,21 @@ export const addEmployee = async (employeeData) => {
         department: employeeData.department
     }
 
-    await addDoc(dbRef, employee);
-    console.log(employee);
-    return employee;
+    const doc = await addDoc(dbRef, employee);
+    return doc;
+}
+
+export const getEmployee = async (employeeId) => { 
+    const docRef = doc(db, "employees", employeeId);
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap);
+    return docSnap;
+}
+
+export const updateEmployee = async (employeeId, updatedValue) => { 
+    const docRef = doc(db, "employees", employeeId);
+    const docSnap = await updateDoc(docRef, updatedValue);
+    return docSnap;
 }
 
 export const deleteEmployee = async (employeeId) => { 

@@ -25,8 +25,7 @@
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(employeeData);
-        onEmployeeCreate(employeeData);   
+        onEmployeeCreate(employeeData); 
     };
 
 

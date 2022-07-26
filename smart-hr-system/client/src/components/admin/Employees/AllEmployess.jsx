@@ -11,7 +11,7 @@ export const AllEmployees = () => {
 
     const [loading, setLoading] = useState(false)
     const [employees, setEmployees] = useState([]);
-    const [selectedEmployeeId, setSelectedEmployeeId] = useState({});
+    const [selectedEmployee, setSelectedEmployee] = useState({});
 
     useEffect(() => {
         setLoading(true)
@@ -24,26 +24,34 @@ export const AllEmployees = () => {
     }, [])
 
 
+    const closeHandler = () => {
+        setSelectedEmployee( null );
+    };
+
     function employeeCreateHandler (employeeData) {
             EmployeeService
             .addEmployee(employeeData)
-            .then(employee => {
-                setEmployees(oldEmployees => [...oldEmployees, employee]);
+            .then(doc => {
+                EmployeeService.getEmployee(doc.id)
+                    .then(res => {
+                        setEmployees(oldEmployees => [...oldEmployees, res]);
+                    })
             })
             .catch(err => {
                 console.log(err);
             });
     }
 
-    function employeeSeteHandler(employeeId){
-       setSelectedEmployeeId(employeeId);
+    function employeeSeteHandler(employee){
+       setSelectedEmployee(employee);
     }
 
     function employeeDelete(){
         EmployeeService
-        .deleteEmployee(selectedEmployeeId)
+        .deleteEmployee(selectedEmployee.id)
         .then(employee => {
-            setEmployees((oldEmployees) => oldEmployees.filter((item) => item.id !== selectedEmployeeId));
+            setEmployees((oldEmployees) => oldEmployees.filter((item) => item.id !== selectedEmployee.id));
+            closeHandler();
         })
         .catch(err => {
             console.log(err);
@@ -141,7 +149,9 @@ export const AllEmployees = () => {
                 onEmployeeCreate={employeeCreateHandler}
             />
 
-            <Editemployee />
+            {/* <Editemployee 
+                employeeData={getCurrentEmployeeData}
+            /> */}
 
             <DeleteEmployee
                 onEmployeeDelete={employeeDelete}
