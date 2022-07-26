@@ -3318,6 +3318,11 @@ span#close-task-panel {
 .profile-action .dropdown-toggle::after {
 	display: none;
 }
+
+.employee-view-more{
+	border: none;
+}
+
 .profile-img {
 	cursor: pointer;
 	height: 80px;

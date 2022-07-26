@@ -1,12 +1,11 @@
 import db from './firebase'
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
 const dbRef = collection(db, "employees");
 
-export const getEmployees = async () => {   
+export const getAllEmployees = async () => {   
     const employeeSnapshot = await getDocs(dbRef); 
-    const emplList = employeeSnapshot.docs.map(doc => doc.data());
-    console.log(emplList);
+    const emplList = employeeSnapshot.docs.map(doc => doc);
     return emplList;
 }
 
@@ -25,5 +24,16 @@ export const addEmployee = async (employeeData) => {
     await addDoc(dbRef, employee);
     console.log(employee);
     return employee;
+}
+
+export const deleteEmployee = async (employeeId) => { 
+    const docRef = doc(db, "employees", employeeId);
+    deleteDoc(docRef)
+        .then(() => {
+            console.log("Entire Document has been deleted successfully.")
+        })
+        .catch(error => {
+            console.log(error);
+        })
 }
 
