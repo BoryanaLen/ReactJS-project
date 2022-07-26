@@ -1,10 +1,10 @@
   import { useState } from 'react';
-  import * as EmployeeService  from "../../../services/EmployeeService";
 
-  export const Addemployee = () => {
+  export const Addemployee = ({
+    onEmployeeCreate
+   }) => {
 
     const [errors, setErrors] = useState({});
-    const [employees, setEmployees] = useState([]);
     const [employeeData, setEmployeeData] = useState({
         firstName: '',
         lastName: '',
@@ -25,15 +25,8 @@
 
     const submitHandler = (e) => {
         e.preventDefault();
-
-        EmployeeService
-            .addEmployee(employeeData)
-            .then(empl => {
-                setEmployees(oldEmployees => [...oldEmployees, empl]);
-            })
-            .catch(err => {
-                console.log(err);
-            });                 
+        console.log(employeeData);
+        onEmployeeCreate(employeeData);   
     };
 
 

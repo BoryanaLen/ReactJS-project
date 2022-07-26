@@ -25,7 +25,7 @@ export const AllEmployees = () => {
         setEmployeeAction({ employee: null, action: null });
     };
 
-    const employeeCreateHandler = (employeeData) => {
+    function employeeCreateHandler (employeeData) {
             EmployeeService
             .addEmployee(employeeData)
             .then(employee => {
@@ -114,7 +114,7 @@ export const AllEmployees = () => {
             <div className="row staff-grid-row">
                 { employees &&
                     employees.map((employee, index) => (
-                        <div className="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">     
+                        <div className="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3" key={index}>     
                         <div className="profile-widget">
                         <div className="profile-img">
                             <Link to="/app/profile/employee-profile" className="avatar"><img src={Avatar_02} alt="" /></Link>
@@ -135,7 +135,7 @@ export const AllEmployees = () => {
 
             <Addemployee 
                 onClose={closeHandler}
-                onUserCreate={employeeCreateHandler}
+                onEmployeeCreate={employeeCreateHandler}
             />
 
             <Editemployee />
