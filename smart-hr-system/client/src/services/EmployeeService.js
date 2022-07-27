@@ -28,14 +28,14 @@ export const addEmployee = async (employeeData) => {
 export const getEmployee = async (employeeId) => { 
     const docRef = doc(db, "employees", employeeId);
     const docSnap = await getDoc(docRef);
-    console.log(docSnap);
     return docSnap;
 }
 
 export const updateEmployee = async (employeeId, updatedValue) => { 
     const docRef = doc(db, "employees", employeeId);
-    const docSnap = await updateDoc(docRef, updatedValue);
-    return docSnap;
+    console.log(docRef);
+    await updateDoc(docRef, updatedValue);
+    return docRef;
 }
 
 export const deleteEmployee = async (employeeId) => { 

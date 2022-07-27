@@ -1,11 +1,32 @@
+import { useState } from 'react';
+  
   export const Editemployee = ({
     employeeData,
+    onCancelAction,
     onEmployeeEdit
   }) => {
 
+    const [values, setValues] = useState({
+        firstName: employeeData.data().firstName,
+        lastName: employeeData.data().lastName,
+        email: employeeData.data().email,
+        phone: employeeData.data().phone,
+        department: employeeData.data().department,
+        position: employeeData.data().position,
+        joinDate: employeeData.data().joinDate,
+        address: employeeData.data().address
+    });
+
     const submitHandler = (e) => {
         e.preventDefault();
-        onEmployeeEdit(e.value);   
+        onEmployeeEdit(values);   
+    };
+
+    const changeHandler = (e) => {
+        setValues(state => ({
+            ...state,
+            [e.target.name]: e.target.value
+        }));
     };
     
     return ( 
@@ -14,7 +35,7 @@
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Edit Employee</h5>
-              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close" onClick={onCancelAction}>
                 <span aria-hidden="true">x</span>
               </button>
             </div>
@@ -24,37 +45,37 @@
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="firstName">First Name <span className="text-danger">*</span></label>
-                         <input className="form-control" id="firstName" name="firstName" type="text" defaultValue={employeeData.firstName}/>
+                         <input className="form-control" id="firstName" name="firstName" type="text"  defaultValue={employeeData.data().firstName} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="lastName">Last Name <span className="text-danger">*</span></label>
-                         <input className="form-control" id="lastName" name='lastName' type="text" defaultValue={employeeData.data().lastName} />
+                         <input className="form-control" id="lastName" name='lastName' type="text" defaultValue={employeeData.data().lastName} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="email">Email <span className="text-danger">*</span></label>
-                         <input className="form-control" id="email" name="email" type="email" defaultValue={employeeData.data().email} />
+                         <input className="form-control" id="email" name="email" type="email" defaultValue={employeeData.data().email} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">  
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="address">Address <span className="text-danger">*</span></label>
-                         <input type="text" className="form-control" id="address" name='address' defaultValue={employeeData.data().address} />
+                         <input type="text" className="form-control" id="address" name='address' defaultValue={employeeData.data().address} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">  
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="joinDate">Joining Date <span className="text-danger">*</span></label>
-                         <div><input className="form-control datetimepicker" type="date" id='joinDate' name='joinDate' defaultValue={employeeData.data().joinDate} /></div>
+                         <div><input className="form-control datetimepicker" type="date" id='joinDate' name='joinDate' defaultValue={employeeData.data().joinDate} onChange={changeHandler}/></div>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="phoneNumber">Phone <span className="text-danger">*</span></label>
-                         <input className="form-control" type="text" id='phoneNumber' name='phoneNumber'  defaultValue={employeeData.data().phoneNumber}/>
+                         <input className="form-control" type="text" id='phoneNumber' name='phoneNumber'  defaultValue={employeeData.data().phoneNumber} onChange={changeHandler} />
                        </div>
                      </div>
                      <div className="col-md-6">
@@ -81,7 +102,7 @@
                      </div>
                    </div>
                 <div className="submit-section">
-                  <button className="btn btn-primary submit-btn">Save</button>
+                  <button className="btn btn-primary submit-btn" >Save</button>
                 </div>
               </form>
             </div>

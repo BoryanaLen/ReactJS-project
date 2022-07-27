@@ -1,5 +1,6 @@
 export const DeleteEmployee = ({
-    onEmployeeDelete
+    onEmployeeDelete,
+    onCancelAction
 }) =>{
 
     return(
@@ -17,7 +18,7 @@ export const DeleteEmployee = ({
                                     <button data-bs-dismiss="modal" className="btn btn-primary continue-btn" onClick={onEmployeeDelete}>Delete</button>
                                 </div>
                                 <div className="col-6">
-                                    <button data-bs-dismiss="modal" className="btn btn-primary cancel-btn" >Cancel</button>
+                                    <button data-bs-dismiss="modal" className="btn btn-primary cancel-btn" onClick={onCancelAction}>Cancel</button>
                                 </div>
                             </div>
                         </div>
