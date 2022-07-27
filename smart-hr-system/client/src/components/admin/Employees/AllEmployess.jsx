@@ -11,7 +11,7 @@ export const AllEmployees = () => {
 
     const [loading, setLoading] = useState(false)
     const [employees, setEmployees] = useState([]);
-    const [selectedEmployee, setSelectedEmployee] = useState({});
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
 
     useEffect(() => {
         setLoading(true)
@@ -26,27 +26,29 @@ export const AllEmployees = () => {
 
     const closeHandler = () => {
         setSelectedEmployee( null );
+        console.log('clear set employee')
     };
-
-    function employeeCreateHandler (employeeData) {
-            EmployeeService
-            .addEmployee(employeeData)
-            .then(doc => {
-                EmployeeService.getEmployee(doc.id)
-                    .then(res => {
-                        setEmployees(oldEmployees => [...oldEmployees, res]);
-                    })
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
 
     function employeeSeteHandler(employee){
        setSelectedEmployee(employee);
+       console.log('set employee current')
     }
 
-    function employeeDelete(){
+    function employeeCreateHandler (employeeData) {
+        EmployeeService
+        .addEmployee(employeeData)
+        .then(doc => {
+            EmployeeService.getEmployee(doc.id)
+                .then(res => {
+                    setEmployees(oldEmployees => [...oldEmployees, res]);
+                })
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    function employeeDeleteHandler(){
         EmployeeService
         .deleteEmployee(selectedEmployee.id)
         .then(employee => {
@@ -57,6 +59,31 @@ export const AllEmployees = () => {
             console.log(err);
         });
     }
+
+    function employeeUpdateHandler(updatedData){
+        EmployeeService
+        .updateEmployee(selectedEmployee.id, updatedData)
+        .then(employee => {
+           
+            closeHandler();
+            console.log(employees);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    
+    const updateState = (emplData) => {
+        const newState = employees.map(obj => {
+          if (obj.id === selectedEmployee.id) {
+            return {emplData};
+          }
+          return obj;
+        });
+    
+        setEmployees(newState);
+      };
 
 
     return (
@@ -149,13 +176,20 @@ export const AllEmployees = () => {
                 onEmployeeCreate={employeeCreateHandler}
             />
 
-            {/* <Editemployee 
-                employeeData={getCurrentEmployeeData}
-            /> */}
+           {selectedEmployee != null &&
+                <div> 
+                    <Editemployee 
+                        employeeData={selectedEmployee}
+                        onCancelAction={closeHandler}
+                        onEmployeeEdit={employeeUpdateHandler}
+                    />
 
-            <DeleteEmployee
-                onEmployeeDelete={employeeDelete}
-            />
+                    <DeleteEmployee
+                        onEmployeeDelete={employeeDeleteHandler}
+                        onCancelAction={closeHandler}
+                    />
+                </div>
+           }
         </div>
     );
 }
