@@ -18,7 +18,10 @@ export const AllEmployees = () => {
         EmployeeService
             .getAllEmployees()
             .then((data) => {
-                setEmployees(data)
+                const list = data.map(empl => {
+                    return { id: empl.id, data: empl.data() };
+                })
+                setEmployees(list)
             })
             .finally(() => setLoading(false))
     }, [])
@@ -38,10 +41,7 @@ export const AllEmployees = () => {
         EmployeeService
         .addEmployee(employeeData)
         .then(doc => {
-            EmployeeService.getEmployee(doc.id)
-                .then(res => {
-                    setEmployees(oldEmployees => [...oldEmployees, res]);
-                })
+            setEmployees(oldEmployees => [...oldEmployees, {id: doc.id, data: employeeData}]);
         })
         .catch(err => {
             console.log(err);
@@ -64,9 +64,8 @@ export const AllEmployees = () => {
         EmployeeService
         .updateEmployee(selectedEmployee.id, updatedData)
         .then(employee => {
-           
+            updateState(updatedData);
             closeHandler();
-            console.log(employees);
         })
         .catch(err => {
             console.log(err);
@@ -74,10 +73,10 @@ export const AllEmployees = () => {
     }
 
     
-    const updateState = (emplData) => {
+    const updateState = (newData) => {
         const newState = employees.map(obj => {
           if (obj.id === selectedEmployee.id) {
-            return {emplData};
+            return {...obj, data: newData};
           }
           return obj;
         });
@@ -179,7 +178,7 @@ export const AllEmployees = () => {
            {selectedEmployee != null &&
                 <div> 
                     <Editemployee 
-                        employeeData={selectedEmployee}
+                        employeeData={selectedEmployee.data}
                         onCancelAction={closeHandler}
                         onEmployeeEdit={employeeUpdateHandler}
                     />

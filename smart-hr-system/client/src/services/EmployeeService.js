@@ -10,18 +10,8 @@ export const getAllEmployees = async () => {
 }
 
 export const addEmployee = async (employeeData) => {
-    const employee = {
-        firstName: employeeData.firstName,
-        lastName: employeeData.lastName,
-        email: employeeData.email,
-        address: employeeData.address,
-        joinDate: employeeData.joinDate,
-        phone: employeeData.phoneNumber,
-        position: employeeData.position,
-        department: employeeData.department
-    }
-
-    const doc = await addDoc(dbRef, employee);
+    const doc = await addDoc(dbRef, employeeData);
+    console.log(doc);
     return doc;
 }
 
@@ -33,9 +23,8 @@ export const getEmployee = async (employeeId) => {
 
 export const updateEmployee = async (employeeId, updatedValue) => { 
     const docRef = doc(db, "employees", employeeId);
-    console.log(docRef);
     await updateDoc(docRef, updatedValue);
-    return docRef;
+    return getEmployee(employeeId);
 }
 
 export const deleteEmployee = async (employeeId) => { 

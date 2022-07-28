@@ -6,20 +6,11 @@ import { useState } from 'react';
     onEmployeeEdit
   }) => {
 
-    const [values, setValues] = useState({
-        firstName: employeeData.data().firstName,
-        lastName: employeeData.data().lastName,
-        email: employeeData.data().email,
-        phone: employeeData.data().phone,
-        department: employeeData.data().department,
-        position: employeeData.data().position,
-        joinDate: employeeData.data().joinDate,
-        address: employeeData.data().address
-    });
+    const [values, setValues] = useState({...employeeData});
 
     const submitHandler = (e) => {
         e.preventDefault();
-        onEmployeeEdit(values);   
+        onEmployeeEdit(values); 
     };
 
     const changeHandler = (e) => {
@@ -45,37 +36,37 @@ import { useState } from 'react';
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="firstName">First Name <span className="text-danger">*</span></label>
-                         <input className="form-control" id="firstName" name="firstName" type="text"  defaultValue={employeeData.data().firstName} onChange={changeHandler}/>
+                         <input className="form-control" id="firstName" name="firstName" type="text"  defaultValue={values.firstName} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="lastName">Last Name <span className="text-danger">*</span></label>
-                         <input className="form-control" id="lastName" name='lastName' type="text" defaultValue={employeeData.data().lastName} onChange={changeHandler}/>
+                         <input className="form-control" id="lastName" name='lastName' type="text" defaultValue={values.lastName} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="email">Email <span className="text-danger">*</span></label>
-                         <input className="form-control" id="email" name="email" type="email" defaultValue={employeeData.data().email} onChange={changeHandler}/>
+                         <input className="form-control" id="email" name="email" type="email" defaultValue={values.email} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">  
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="address">Address <span className="text-danger">*</span></label>
-                         <input type="text" className="form-control" id="address" name='address' defaultValue={employeeData.data().address} onChange={changeHandler}/>
+                         <input type="text" className="form-control" id="address" name='address' defaultValue={values.address} onChange={changeHandler}/>
                        </div>
                      </div>
                      <div className="col-sm-6">  
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="joinDate">Joining Date <span className="text-danger">*</span></label>
-                         <div><input className="form-control datetimepicker" type="date" id='joinDate' name='joinDate' defaultValue={employeeData.data().joinDate} onChange={changeHandler}/></div>
+                         <div><input className="form-control datetimepicker" type="date" id='joinDate' name='joinDate' defaultValue={values.joinDate} onChange={changeHandler}/></div>
                        </div>
                      </div>
                      <div className="col-sm-6">
                        <div className="form-group">
                          <label className="col-form-label" htmlFor="phoneNumber">Phone <span className="text-danger">*</span></label>
-                         <input className="form-control" type="text" id='phoneNumber' name='phoneNumber'  defaultValue={employeeData.data().phoneNumber} onChange={changeHandler} />
+                         <input className="form-control" type="text" id='phoneNumber' name='phoneNumber'  defaultValue={values.phoneNumber} onChange={changeHandler} />
                        </div>
                      </div>
                      <div className="col-md-6">
@@ -102,7 +93,7 @@ import { useState } from 'react';
                      </div>
                    </div>
                 <div className="submit-section">
-                  <button className="btn btn-primary submit-btn" >Save</button>
+                  <button className="btn btn-primary submit-btn" data-bs-dismiss="modal" >Save</button>
                 </div>
               </form>
             </div>

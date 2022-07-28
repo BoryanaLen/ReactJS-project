@@ -18,8 +18,8 @@ export const Employee = ({
                         <button className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_employee"><i className="fa fa-trash-o m-r-5" /> Delete</button>
                 </div>
                 </div>
-                <h4 className="user-name m-t-10 mb-0 text-ellipsis"><Link to="/app/profile/employee-profile">{ employee.data().firstName + " " + employee.data().lastName  }</Link></h4>
-                <div className="small text-muted">{ employee.data().position }</div>
+                <h4 className="user-name m-t-10 mb-0 text-ellipsis"><Link to="/app/profile/employee-profile">{ employee.data.firstName + " " + employee.data.lastName  }</Link></h4>
+                <div className="small text-muted">{ employee.data.position }</div>
             </div>
         </div>
     )
