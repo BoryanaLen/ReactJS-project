@@ -62,13 +62,13 @@ import {useAuthValue} from '../contexts/AuthContext';
                          <label>Password</label>
                          <input  type="password" className="form-control"  value={password} onChange={e => setPassword(e.target.value)} required /> 
                        </div>
-                       <div className="col-auto">
+                     </div>             
+                   </div>
+                   <div className="col-auto">
                          <Link className="text-muted" to="/forgotpassword">
                            Forgot password?
                          </Link>
                        </div>
-                     </div>             
-                   </div>
                    <div className="form-group text-center">
                    <button className="btn btn-primary account-btn" type="submit" > Login </button>                    
                    </div>

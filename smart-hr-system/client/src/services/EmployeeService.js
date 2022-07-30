@@ -12,6 +12,8 @@ export const getAllEmployees = async () => {
 }
 
 export const addEmployee = async (employeeData) => {
+    console.log(dbRef);
+    console.log(employeeData);
     const doc = await addDoc(dbRef, employeeData);
     console.log(doc);
     return doc;

@@ -25,6 +25,7 @@
 
     const submitHandler = (e) => {
         e.preventDefault();
+        console.log(employeeData);
         onEmployeeCreate(employeeData); 
     };
 
@@ -93,23 +94,13 @@
                      <div className="col-md-6">
                        <div className="form-group">
                          <label>Department <span className="text-danger">*</span></label>
-                         <select className="select">
-                           <option>Select Department</option>
-                           <option>Web Development</option>
-                           <option>IT Management</option>
-                           <option>Marketing</option>
-                         </select>
+                         <div><input className="form-control datetimepicker" type="text" id='department' name='department' value={employeeData.department} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/></div>
                        </div>
                      </div>
                      <div className="col-md-6">
                        <div className="form-group">
                          <label>Position <span className="text-danger">*</span></label>
-                         <select className="select">
-                           <option>Select Position</option>
-                           <option>Web Designer</option>
-                           <option>Web Developer</option>
-                           <option>Android Developer</option>
-                         </select>
+                         <div><input className="form-control datetimepicker" type="text" id='joposition' name='position' value={employeeData.position} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/></div>
                        </div>
                      </div>
                    </div>

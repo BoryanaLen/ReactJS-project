@@ -72,23 +72,13 @@ import { useState } from 'react';
                      <div className="col-md-6">
                        <div className="form-group">
                          <label>Department <span className="text-danger">*</span></label>
-                         <select className="select">
-                           <option>Select Department</option>
-                           <option>Web Development</option>
-                           <option>IT Management</option>
-                           <option>Marketing</option>
-                         </select>
+                         <input className="form-control" type="text" id='department' name='department'  defaultValue={values.department} onChange={changeHandler} />
                        </div>
                      </div>
                      <div className="col-md-6">
                        <div className="form-group">
                          <label>Position <span className="text-danger">*</span></label>
-                         <select className="select">
-                           <option>Select Position</option>
-                           <option>Web Designer</option>
-                           <option>Web Developer</option>
-                           <option>Android Developer</option>
-                         </select>
+                         <input className="form-control" type="text" id='phoneposition' name='position'  defaultValue={values.position} onChange={changeHandler} />
                        </div>
                      </div>
                    </div>
