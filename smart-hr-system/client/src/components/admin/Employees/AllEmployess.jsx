@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Addemployee } from "./Addemployee"
 import { Editemployee } from "./Editemployee"
 import { Employee } from './Employee'
-import * as EmployeeService  from "../../../services/EmployeeService";
+import * as employeeService  from "../../../services/employeeService";
 
 import { DeleteEmployee } from './DeleteEmployee';
 
@@ -15,7 +15,7 @@ export const AllEmployees = () => {
 
     useEffect(() => {
         setLoading(true)
-        EmployeeService
+        employeeService
             .getAllEmployees()
             .then((data) => {
                 const list = data.map(empl => {
@@ -38,7 +38,7 @@ export const AllEmployees = () => {
     }
 
     function employeeCreateHandler (employeeData) {
-        EmployeeService
+        employeeService
         .addEmployee(employeeData)
         .then(doc => {
             setEmployees(oldEmployees => [...oldEmployees, {id: doc.id, data: employeeData}]);
@@ -49,7 +49,7 @@ export const AllEmployees = () => {
     }
 
     function employeeDeleteHandler(){
-        EmployeeService
+        employeeService
         .deleteEmployee(selectedEmployee.id)
         .then(employee => {
             setEmployees((oldEmployees) => oldEmployees.filter((item) => item.id !== selectedEmployee.id));
@@ -61,7 +61,7 @@ export const AllEmployees = () => {
     }
 
     function employeeUpdateHandler(updatedData){
-        EmployeeService
+        employeeService
         .updateEmployee(selectedEmployee.id, updatedData)
         .then(employee => {
             updateState(updatedData);
