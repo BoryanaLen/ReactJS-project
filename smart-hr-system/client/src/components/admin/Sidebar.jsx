@@ -53,7 +53,7 @@ export const Sidebar = (props) => {
                 
                 <ul >
                     <li><Link className={pathname.includes('allemployees') ?"active" :pathname.includes('employees-list') ?"active" :""} 
-                        to="/allemployees">All Employees</Link></li>
+                        to="/adnin/allemployees">All Employees</Link></li>
                     <li><Link className={pathname.includes('holidays') ?"active" :""} to="/app/employee/holidays">Holidays</Link></li>
                     <li><Link className={pathname.includes('es-admin') ?"active" :""} to="/app/employee/leaves-admin">Leaves <span className="badge badge-pill bg-primary float-end">1</span></Link></li>
                     <li><Link className={pathname.includes('e-settings') ?"active" :""} to="/app/employee/leave-settings">Leave Settings</Link></li>

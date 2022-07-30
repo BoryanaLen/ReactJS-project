@@ -1,77 +1,87 @@
-import { useState } from 'react'
-import { Link, useNavigate } from "react-router-dom";
+ import React, {useState} from 'react';
+ import { Link } from 'react-router-dom';
+ import {Applogo} from '../assets/imagepath';
 
-import { app } from '../services/firebase';
-import { Applogo } from '../assets/imagepath';
-import { getAuth, signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth';
-import { useAuthValue } from '../contexts/AuthContext';
-
-export const Login = () => {
+import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
+import {auth} from '../services/firebase';
+import {useNavigate} from 'react-router-dom'
+import {useAuthValue} from '../contexts/AuthContext';
+ 
    
-    console.log('login');
-    const auth = getAuth(app)
+ export const  Login = (props) => {
+   
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const [error, setError] = useState('')
     const {setTimeActive} = useAuthValue()
     const navigate = useNavigate()
-  
-    const onsubmit = e => {
-        e.preventDefault()
-        signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            if(!auth.currentUser.emailVerified) {
-            sendEmailVerification(auth.currentUser)
-            .then(() => {
-                setTimeActive(true)
-                navigate('/verify-email')
-            })
-            .catch(err => alert(err.message))
-        }else{
-            navigate('/')
-        }
-        })
-        .catch(err => setError(err.message))
-    }
 
-    (
-        <>
-        <div className="account-content">
-          <Link to="/applyjob/joblist" className="btn btn-primary apply-btn">Apply Job</Link>
-          <div className="container">
-            <div className="account-logo">
-                <img src={Applogo} alt="Dreamguy's Technologies" />
-            </div>
-            <div className="account-box">
-              <div className="account-wrapper">
-                <h3 className="account-title">Login</h3>
-                {error && <div className='auth__error'>{error}</div>}
-                <p className="account-subtitle">Access to dashboard</p>
-                <div>
-                <form onSubmit={onsubmit}>
-                    <div className="form-group">
-                        <label htmlFor="email">Email Address</label>
-                        <input id='email' type='email' className="form-control" name="email" value={email} required onChange={e => setEmail(e.target.value)}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input id='password' type="password"  className="form-control" name="password" value={password} required onChange={e => setPassword(e.target.value)}/>   
-                        <Link className="text-muted" to="/forgotpassword">
-                          Forgot password?
-                        </Link>                          
-                    </div>                   
-                    <div className="form-group text-center">
-                        <button className="btn btn-primary account-btn" type="submit" > Login  </button>                 
-                    </div>
-                </form>
-                <div className="account-footer">
-                    <p>Don't have an account yet? <Link to="/register">Register</Link></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-}
+  const onSubmit = e => {
+    e.preventDefault()
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      if(!auth.currentUser.emailVerified) {
+        sendEmailVerification(auth.currentUser)
+        .then(() => {
+          setTimeActive(true)
+          if (email === "admin@admin.com"){
+            navigate('/admin/dashboard')
+          }
+        })
+      .catch(err => alert(err.message))
+    }else{
+      navigate('/')
+    }
+    })
+    .catch(err => setError(err.message))
+  }
+    return (
+         <div className="account-content">
+           <Link to="/applyjob/joblist" className="btn btn-primary apply-btn">Apply Job</Link>
+           <div className="container">
+             {/* Account Logo */}
+             <div className="account-logo">
+               <Link to="/app/main/dashboard"><img src={Applogo} alt="Dreamguy's Technologies" /></Link>
+             </div>
+             {/* /Account Logo */}
+             <div className="account-box">
+               <div className="account-wrapper">
+                 <h3 className="account-title">Login</h3>
+                 {error && <div className='auth__error'>{error}</div>}
+                 <p className="account-subtitle">Access to our dashboard</p>
+                 {/* Account Form */}
+                 <div>
+                 <form onSubmit={onSubmit}>
+                   <div className="form-group">
+                     <label>Email Address</label>
+                     <input   className="form-control" type="email" value={email}  onChange={e => setEmail(e.target.value)} required  />
+                   </div>
+                   <div className="form-group">
+                     <div className="row">
+                       <div className="col">
+                         <label>Password</label>
+                         <input  type="password" className="form-control"  value={password} onChange={e => setPassword(e.target.value)} required /> 
+                       </div>
+                       <div className="col-auto">
+                         <Link className="text-muted" to="/forgotpassword">
+                           Forgot password?
+                         </Link>
+                       </div>
+                     </div>             
+                   </div>
+                   <div className="form-group text-center">
+                   <button className="btn btn-primary account-btn" type="submit" > Login </button>                    
+                   </div>
+                   </form>
+                   <div className="account-footer">
+                     <p>Don't have an account yet? <Link to="/register">Register</Link></p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       );
+    }
+ 
+ 

@@ -21,7 +21,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AllEmployees } from './components/admin/Employees/AllEmployess';
-import { DashboardContent } from './components/admin/DashboardContent';
+import { AdminDashboard } from './components/admin/Dashboard';
 
 
 function App() {
@@ -40,10 +40,11 @@ function App() {
     <AuthProvider value={{currentUser, timeActive, setTimeActive}}>
         <div className="App">
             <Routes>
-                <Route path="/" element={ <Register/> } />
+                <Route path="/" element={ <Login/> } />
                 <Route path="/login" element={ <Login/> } />
-                <Route path="/admin/dashboard" element={< DashboardContent />} />
+                <Route path="/register" element={ <Register/> } />
                 <Route path="/adnin/allemployees" element={< AllEmployees />} />
+                <Route path="/admin/dashboard" element={< AdminDashboard />} />
             </Routes>  
         </div>
     </AuthProvider>

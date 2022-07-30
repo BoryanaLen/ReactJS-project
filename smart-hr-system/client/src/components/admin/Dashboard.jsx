@@ -25,8 +25,7 @@ export const AdminDashboard = () => {
         });
     
         return (
-            <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}>      
-                
+            <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}>                     
                 <Header onMenuClick={(value) => toggleMobileMenu()} />
                 <Sidebar /> 
                 <DashboardContent/>

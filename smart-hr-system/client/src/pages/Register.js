@@ -35,7 +35,7 @@ import {useAuthValue} from '../contexts/AuthContext'
               sendEmailVerification(auth.currentUser)   
               .then(() => {
                 setTimeActive(true)
-                navigate('/verify-email')
+                navigate('/')
               }).catch((err) => alert(err.message))
             })
             .catch(err => setError(err.message))
