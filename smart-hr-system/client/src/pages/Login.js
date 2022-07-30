@@ -1,36 +1,40 @@
-import React, { useState, useContext } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 
-import {Applogo} from '../assets/imagepath';
-import * as authService  from "../services/authService";
-import { AuthContext } from '../contexts/AuthContext';
+import { app } from '../services/firebase';
+import { Applogo } from '../assets/imagepath';
+import { getAuth, signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth';
+import { useAuthValue } from '../contexts/AuthContext';
 
-export const Loginpage = (props) => {
+export const Login = () => {
    
-    const { userLogin } = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-        const {
-            email,
-            password,
-        } = Object.fromEntries(new FormData(e.target));
-
-        authService.login(email, password)
-            .then(authData => {
-                userLogin(authData);
-                navigate('/admin/dashboard');
+    console.log('login');
+    const auth = getAuth(app)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('') 
+    const [error, setError] = useState('')
+    const {setTimeActive} = useAuthValue()
+    const navigate = useNavigate()
+  
+    const onsubmit = e => {
+        e.preventDefault()
+        signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            if(!auth.currentUser.emailVerified) {
+            sendEmailVerification(auth.currentUser)
+            .then(() => {
+                setTimeActive(true)
+                navigate('/verify-email')
             })
-            .catch((e) => {
-                console.log(e);
-                // navigate('/404');
-                navigate('/admin/employees');
-            });
-    };
+            .catch(err => alert(err.message))
+        }else{
+            navigate('/')
+        }
+        })
+        .catch(err => setError(err.message))
+    }
 
-    return (
+    (
         <>
         <div className="account-content">
           <Link to="/applyjob/joblist" className="btn btn-primary apply-btn">Apply Job</Link>
@@ -41,16 +45,17 @@ export const Loginpage = (props) => {
             <div className="account-box">
               <div className="account-wrapper">
                 <h3 className="account-title">Login</h3>
+                {error && <div className='auth__error'>{error}</div>}
                 <p className="account-subtitle">Access to dashboard</p>
                 <div>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onsubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>
-                        <input id='email' type='email' className="form-control" name="email"/>
+                        <input id='email' type='email' className="form-control" name="email" value={email} required onChange={e => setEmail(e.target.value)}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input id='password' type="password"  className="form-control" name="password"/>   
+                        <input id='password' type="password"  className="form-control" name="password" value={password} required onChange={e => setPassword(e.target.value)}/>   
                         <Link className="text-muted" to="/forgotpassword">
                           Forgot password?
                         </Link>                          

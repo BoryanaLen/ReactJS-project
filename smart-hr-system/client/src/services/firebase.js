@@ -1,17 +1,19 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA_ssmce0tsDmen2emgKXw6uFF9saMRGWE",
-  authDomain: "hr-smart-system.firebaseapp.com",
-  databaseURL: "https://hr-smart-system-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "hr-smart-system",
-  storageBucket: "hr-smart-system.appspot.com",
-  messagingSenderId: "883806150359",
-  appId: "1:883806150359:web:72df4168c9c2965ab75a92"
+    apiKey: "AIzaSyBd8PLAUtKRvMlbc7O-V8_Yrpwd2IlRiz8",
+    authDomain: "smart-hr-system-104d5.firebaseapp.com",
+    projectId: "smart-hr-system-104d5",
+    storageBucket: "smart-hr-system-104d5.appspot.com",
+    messagingSenderId: "432383864132",
+    appId: "1:432383864132:web:03569747f7a64a48f17b11"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const auth = getAuth(app);
 
-export default db;
+export  {
+    app,
+    auth
+};

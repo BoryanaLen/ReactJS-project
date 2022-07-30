@@ -1,5 +1,4 @@
 import React, {useEffect,useState } from 'react';
-import { Routes, Route } from 'react-router';
 
 import { DashboardContent } from './DashboardContent'
 import { Header } from '../common/Header'
@@ -30,13 +29,7 @@ export const AdminDashboard = () => {
                 
                 <Header onMenuClick={(value) => toggleMobileMenu()} />
                 <Sidebar /> 
-
-                <div className="page-wrapper">
-                    <Routes>
-                        <Route path="/" element={(< DashboardContent />)} />
-                        <Route path="/allemployees" element={(< AllEmployees />)} />
-                    </Routes>
-                </div>
+                <DashboardContent/>
             </div>
         );
  }

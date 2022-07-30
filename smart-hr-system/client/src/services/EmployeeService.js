@@ -1,6 +1,8 @@
-import db from './firebase'
+import { app } from './firebase'
+import { getFirestore } from 'firebase/firestore';
 import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 
+const db = getFirestore(app);
 const dbRef = collection(db, "employees");
 
 export const getAllEmployees = async () => {   
