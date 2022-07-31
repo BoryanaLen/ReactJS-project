@@ -7,6 +7,8 @@ import * as employeeService  from "../../../services/employeeService";
 
 import {useAuthValue} from '../../../contexts/AuthContext';
 import { DeleteEmployee } from './DeleteEmployee';
+import { Header } from '../../common/Header';
+import { Sidebar } from '../../admin/Sidebar';
 
 export const AllEmployees = () => {
 
@@ -16,6 +18,7 @@ export const AllEmployees = () => {
     const [loading, setLoading] = useState(false)
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [menu, setMenu] = useState(false)
 
     useEffect(() => {
         setLoading(true)
@@ -88,8 +91,17 @@ export const AllEmployees = () => {
         setEmployees(newState);
       };
 
+      const toggleMobileMenu = () => {
+		setMenu(!menu)
+	  }
+
 
     return (
+        <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
+      
+      <Header onMenuClick={(value) => toggleMobileMenu()} />
+      <Sidebar /> 
+      <div className="page-wrapper">
         <div className="content container-fluid">
             {/* Page Header */}
             <div className="page-header">
@@ -110,8 +122,7 @@ export const AllEmployees = () => {
                     </div>
                 </div>
             </div>
-            {/* /Page Header */}
-            {/* Search Filter */}
+
             <div className="row filter-row">
                 <div className="col-sm-6 col-md-3">
                     <div className="form-group form-focus">
@@ -125,19 +136,6 @@ export const AllEmployees = () => {
                         <label className="focus-label">Employee Name</label>
                     </div>
                 </div>
-                {/* <div className="col-sm-6 col-md-3">
-                    <div className="form-group form-focus select-focus">
-                        <select className="select floating" data-select2-id="1"  aria-hidden="true">
-                            <option>Select Designation</option>
-                            <option>Web Developer</option>
-                            <option>Web Designer</option>
-                            <option>Android Developer</option>
-                            <option>Ios Developer</option>
-                        </select>
-                        <label className="focus-label">Designation</label>
-                    </div>
-                </div> */}
-
 
                 <div className="col-sm-6 col-md-3">
                     <div className="form-group form-focus select-focus">
@@ -193,6 +191,8 @@ export const AllEmployees = () => {
                     />
                 </div>
            }
+        </div>
+        </div>
         </div>
     );
 }
