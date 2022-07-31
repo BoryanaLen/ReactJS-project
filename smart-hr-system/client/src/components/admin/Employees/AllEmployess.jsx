@@ -5,16 +5,13 @@ import { Editemployee } from "./Editemployee"
 import { Employee } from './Employee'
 import * as employeeService  from "../../../services/employeeService";
 
-import {useAuthValue} from '../../../contexts/AuthContext';
 import { DeleteEmployee } from './DeleteEmployee';
 import { Header } from '../../common/Header';
 import { SidebarAdmin } from '../SidebarAdmin';
 
 export const AllEmployees = () => {
 
-    const {currentUser} = useAuthValue();
-    
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [menu, setMenu] = useState(false)

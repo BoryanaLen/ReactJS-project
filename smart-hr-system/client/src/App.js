@@ -23,7 +23,7 @@ import { Register } from './pages/Register';
 import { AllEmployees } from './components/admin/Employees/AllEmployess';
 import { AdminDashboard } from './components/admin/Dashboard';
 import { EmployeeDashboard } from './components/employee/Dashboard';
-import { Leaves } from './components/employee/Leaves';
+import { Leaves } from './components/employee/Leaves/Leaves';
 
 function App() {
     

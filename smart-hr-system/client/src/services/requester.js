@@ -11,6 +11,12 @@ export const getAll = async (dataCollection) => {
     return list;
 }
 
+export const getDocumentsByUserId = async (userId, dataCollection) => { 
+    const all = getAll(dataCollection);
+    const list = all.docs.map(doc => doc.uid === userId);
+    return list;
+}
+
 export const addDocument = async (data, dataCollection) => {
     const dbRef = collection(db, dataCollection); 
     const doc = await addDoc(dbRef, data);
