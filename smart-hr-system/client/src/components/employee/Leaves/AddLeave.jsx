@@ -4,7 +4,6 @@ import {useAuthValue} from '../../../contexts/AuthContext';
 export const AddLeave = ({
     onLeaveCreate
 }) => {
-
     const {currentUser} = useAuthValue();
     const [errors, setErrors] = useState({});
     const [leaveData, setLeaveData] = useState({

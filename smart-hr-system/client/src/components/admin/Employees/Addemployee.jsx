@@ -94,13 +94,23 @@
                      <div className="col-md-6">
                        <div className="form-group">
                          <label>Department <span className="text-danger">*</span></label>
-                         <div><input className="form-control datetimepicker" type="text" id='department' name='department' value={employeeData.department} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/></div>
+                         <select className="select" id='department' name='department' value={employeeData.department} onChange={changeHandler}>
+                           <option>Select Department</option>
+                           <option value='Web Development'>Web Development</option>
+                           <option value='IT Management'> IT Management</option>
+                           <option value='Marketing'>Marketing</option>
+                         </select>
                        </div>
                      </div>
                      <div className="col-md-6">
                        <div className="form-group">
-                         <label>Position <span className="text-danger">*</span></label>
-                         <div><input className="form-control datetimepicker" type="text" id='joposition' name='position' value={employeeData.position} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/></div>
+                        <label>Position <span className="text-danger">*</span></label>
+                        <select className="select" id='position' name='position' value={employeeData.position} onChange={changeHandler}>
+                            <option>Select Position</option>
+                            <option value='Web Designer'>Web Designer</option>
+                            <option value='Web Developer'>Web Developer</option>
+                            <option value='Android Developer'>Android Developer</option>
+                        </select>
                        </div>
                      </div>
                    </div>

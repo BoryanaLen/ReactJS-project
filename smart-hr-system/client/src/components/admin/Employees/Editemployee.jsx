@@ -72,13 +72,23 @@ import { useState } from 'react';
                      <div className="col-md-6">
                        <div className="form-group">
                          <label>Department <span className="text-danger">*</span></label>
-                         <input className="form-control" type="text" id='department' name='department'  defaultValue={values.department} onChange={changeHandler} />
+                         <select className="select" id='department' name='department' value={values.department} onChange={changeHandler}>
+                           <option>Select Department</option>
+                           <option value='Web Development'>Web Development</option>
+                           <option value='IT Management'> IT Management</option>
+                           <option value='Marketing'>Marketing</option>
+                         </select>
                        </div>
                      </div>
                      <div className="col-md-6">
                        <div className="form-group">
-                         <label>Position <span className="text-danger">*</span></label>
-                         <input className="form-control" type="text" id='phoneposition' name='position'  defaultValue={values.position} onChange={changeHandler} />
+                        <label>Position <span className="text-danger">*</span></label>
+                        <select className="select" id='position' name='position' value={values.position} onChange={changeHandler}>
+                            <option>Select Position</option>
+                            <option value='Web Designer'>Web Designer</option>
+                            <option value='Web Developer'>Web Developer</option>
+                            <option value='Android Developer'>Android Developer</option>
+                        </select>
                        </div>
                      </div>
                    </div>

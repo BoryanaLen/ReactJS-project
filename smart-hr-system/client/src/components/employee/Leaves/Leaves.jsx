@@ -39,7 +39,7 @@ export const Leaves = () => {
     const columns = [
     {
         title: 'Leave Type',
-        dataIndex: 'leavetype',
+        dataIndex: 'leaveType',
         sorter: (a, b) => a.leavetype.length - b.leavetype.length,
     },
 
