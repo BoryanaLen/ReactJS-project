@@ -2,8 +2,7 @@ import React, {useEffect,useState } from 'react';
 
 import { DashboardContent } from './DashboardContent'
 import { Header } from '../common/Header'
-import { Sidebar } from './Sidebar'
-import { AllEmployees } from '../admin/Employees/AllEmployess';
+import { SidebarAdmin } from './SidebarAdmin'
 
 
 export const AdminDashboard = () => {
@@ -27,7 +26,7 @@ export const AdminDashboard = () => {
         return (
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}>                     
                 <Header onMenuClick={(value) => toggleMobileMenu()} />
-                <Sidebar /> 
+                <SidebarAdmin /> 
                 <DashboardContent/>
             </div>
         );

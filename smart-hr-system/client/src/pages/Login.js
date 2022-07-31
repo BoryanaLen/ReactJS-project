@@ -20,18 +20,13 @@ import {useAuthValue} from '../contexts/AuthContext';
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
     .then(() => {
-      if(!auth.currentUser.emailVerified) {
-        sendEmailVerification(auth.currentUser)
-        .then(() => {
-          setTimeActive(true)
-          if (email === "admin@admin.com"){
-            navigate('/admin/dashboard')
-          }
-        })
-      .catch(err => alert(err.message))
-    }else{
-      navigate('/')
-    }
+        setTimeActive(true)
+        if (email === "admin@admin.com"){
+          navigate('/admin/dashboard')
+        }
+        else{
+          navigate('employee/dashboard')
+        }
     })
     .catch(err => setError(err.message))
   }

@@ -31,12 +31,9 @@ import {useAuthValue} from '../contexts/AuthContext'
         setError('')
         if(validatePassword()) {
             createUserWithEmailAndPassword(auth, email, password)
-            .then(() => {
-              sendEmailVerification(auth.currentUser)   
-              .then(() => {
-                setTimeActive(true)
-                navigate('/')
-              }).catch((err) => alert(err.message))
+            .then(() => { 
+              setTimeActive(true)
+              navigate('/')
             })
             .catch(err => setError(err.message))
         }

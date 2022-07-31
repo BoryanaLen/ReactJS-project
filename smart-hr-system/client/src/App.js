@@ -22,6 +22,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AllEmployees } from './components/admin/Employees/AllEmployess';
 import { AdminDashboard } from './components/admin/Dashboard';
+import { EmployeeDashboard } from './components/employee/Dashboard';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/register" element={ <Register/> } />
                 <Route path="/admin/allemployees" element={< AllEmployees />} />
                 <Route path="/admin/dashboard" element={< AdminDashboard />} />
+                <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
             </Routes>  
         </div>
     </AuthProvider>

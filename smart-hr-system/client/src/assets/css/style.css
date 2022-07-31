@@ -1775,6 +1775,14 @@ table.dataTable thead > tr > td.sorting {
 	width: 20px;
 	transition: all 0.2s ease-in-out 0s;
 }
+.sidebar-menu > ul > li > button {
+    padding: 8px 15px;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    transition: all 0.2s ease-in-out 0s;
+}
 .sidebar-menu ul li.menu-title a i {
 	font-size: 16px !important;
 	margin-right: 0;
