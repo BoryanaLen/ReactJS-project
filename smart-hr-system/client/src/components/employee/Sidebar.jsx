@@ -37,7 +37,7 @@ export const SidebarEmployee = (props) => {
                 <a href="#" className={isSideMenu === "dashboard" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu ==="dashboard" ? "": "dashboard")}><i className="la la-dashboard" /> <span> Dashboard</span> <span className="menu-arrow" /></a>
                 { isSideMenu === "dashboard" ? 
                     <ul >
-                        <li><Link className={pathname.includes('main/dashboard') ?"active" :""} to="/employee/dashboard">Dashboard</Link></li>
+                        <li><Link className={pathname.includes('employee/dashboard') ?"active" :""} to="/employee/dashboard">Dashboard</Link></li>
                     </ul>
                 	:"" 
                 }
@@ -47,7 +47,7 @@ export const SidebarEmployee = (props) => {
                 <a href="#" className={isSideMenu == "apps" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu =="apps" ? "": "apps")} ><i className="la la-cube" /> <span> Apps</span> <span className="menu-arrow" /></a>
                 { isSideMenu === "apps" ? 
                 <ul>
-                    <li><Link className={pathname.includes('apps/calendar') ?"active" :""} to="/admin/calendar">Calendar</Link></li>
+                    <li><Link className={pathname.includes('employee/calendar') ?"active" :""} to="/employee/calendar">Calendar</Link></li>
                 </ul>
                     :"" 
                 }
@@ -58,7 +58,7 @@ export const SidebarEmployee = (props) => {
                 { isSideMenu === "employee" ? 
                 
                 <ul >
-                     <li><Link className={pathname.includes('ves-employee') ?"active" :""} to="/employee/leaves">Leaves</Link></li>
+                     <li><Link className={pathname.includes('employee/leaves') ?"active" :""} to="/employee/leaves">Leaves</Link></li>
                 </ul>
                     :"" 
                 }

@@ -2,17 +2,17 @@
 import React, { useState,useEffect } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
-import { Avatar_09, Avatar_02,Avatar_03, Avatar_05, Avatar_08, Avatar_10,Avatar_15,Avatar_20, Avatar_24,Avatar_25  } from "../../../Entryfile/imagepath"
+import { Avatar_09, Avatar_02,Avatar_03, Avatar_05, Avatar_08, Avatar_10,Avatar_15,Avatar_20, Avatar_24,Avatar_25  } from "../../assets/imagepath";
 
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
-import {itemRender,onShowSizeChange} from "../../paginationfunction"
-import "../../antdstyle.css"
-import  Delete from "../../../_components/modelbox/Delete"
-import Header from '../../../initialpage/Sidebar/header'
-import Sidebar from '../../../initialpage/Sidebar/sidebar'
+// import {itemRender,onShowSizeChange} from "../../paginationfunction"
+import "../../assets/css/antdstyle.css";
+// import  Delete from "../../../_components/modelbox/Delete"
+import { Header } from '../common/Header'
+import { SidebarAdmin }from '../admin/SidebarAdmin'
 
-const LeaveAdmin = () => {
+export const LeaveAdmin = () => {
 
   const [menu, setMenu] = useState(false)
 
@@ -48,12 +48,12 @@ const LeaveAdmin = () => {
     ]);
   
     useEffect( ()=>{
-      if($('.select').length > 0) {
-        $('.select').select2({
-          minimumResultsForSearch: -1,
-          width: '100%'
-        });
-      }
+    //   if($('.select').length > 0) {
+    //     $('.select').select2({
+    //       minimumResultsForSearch: -1,
+    //       width: '100%'
+    //     });
+    //   }
     });  
       const columns = [
         {
@@ -133,7 +133,7 @@ const LeaveAdmin = () => {
    <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
         <Header onMenuClick={(value) => toggleMobileMenu()} />
-        <Sidebar />        
+        <SidebarAdmin />        
       <div className="page-wrapper">
       <Helmet>
           <title>Leaves - HRMS Admin Template</title>
@@ -237,9 +237,9 @@ const LeaveAdmin = () => {
             <div className="table-responsive">
               
             <Table className="table-striped"
-                  pagination= { {total : data.length,
-                    showTotal : (total, range) => `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger : true,onShowSizeChange: onShowSizeChange ,itemRender : itemRender } }
+                //   pagination= { {total : data.length,
+                //     showTotal : (total, range) => `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                //     showSizeChanger : true,onShowSizeChange: onShowSizeChange ,itemRender : itemRender } }
                   style = {{overflowX : 'auto'}}
                   columns={columns}                 
                   // bordered
@@ -383,11 +383,9 @@ const LeaveAdmin = () => {
       </div>
       {/* /Approve Leave Modal */}
       {/* Delete Leave Modal */}
-      <Delete/>
+      {/* <Delete/> */}
       {/* /Delete Leave Modal */}
     </div>
     </div>
         );
   }
-
-export default LeaveAdmin;

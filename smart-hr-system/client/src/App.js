@@ -26,6 +26,7 @@ import { EmployeeDashboard } from './components/employee/Dashboard';
 import { Leaves } from './components/employee/Leaves/Leaves';
 import { AttendanceAdmin } from './components/admin/AttendanceAdmin';
 import { LeaveAdmin } from './components/admin/LeavesAdmin';
+import { Calendar } from './components/common/Calendar';
 
 function App() {
     
@@ -46,12 +47,17 @@ function App() {
                 <Route path="/" element={ <Login/> } />
                 <Route path="/login" element={ <Login/> } />
                 <Route path="/register" element={ <Register/> } />
+
                 <Route path="/admin/allemployees" element={< AllEmployees />} />
                 <Route path="/admin/dashboard" element={< AdminDashboard />} />
+                <Route path="/admin/employees/leaves" element={< LeaveAdmin />} />
+                <Route path="/admin/employees/attendance" element={< AttendanceAdmin />} />
+                <Route path="/admin/calendar" element={< Calendar />} />
+
                 <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
                 <Route path="/employee/leaves" element={< Leaves />} />
-                <Route path="//admin/employees/leaves" element={< LeaveAdmin />} />
-                <Route path="/admin/employees/attendance" element={< AttendanceAdmin />} />
+                <Route path="/employee/calendar" element={< Calendar />} />
+               
             </Routes>  
         </div>
     </AuthProvider>
