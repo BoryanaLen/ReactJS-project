@@ -13,8 +13,7 @@ import { SidebarAdmin } from '../SidebarAdmin';
 export const AllEmployees = () => {
 
     const {currentUser} = useAuthValue();
-    console.log(currentUser);
-
+    
     const [loading, setLoading] = useState(false)
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -83,6 +82,7 @@ export const AllEmployees = () => {
     const updateState = (newData) => {
         const newState = employees.map(obj => {
           if (obj.id === selectedEmployee.id) {
+            console.log(employees);
             return {...obj, data: newData};
           }
           return obj;

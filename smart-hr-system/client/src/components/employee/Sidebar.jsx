@@ -58,7 +58,7 @@ export const SidebarEmployee = (props) => {
                 { isSideMenu === "employee" ? 
                 
                 <ul >
-                     <li><Link className={pathname.includes('ves-employee') ?"active" :""} to="/app/employee/leaves-employee">Leaves</Link></li>
+                     <li><Link className={pathname.includes('ves-employee') ?"active" :""} to="/employee/leaves">Leaves</Link></li>
                 </ul>
                     :"" 
                 }
