@@ -12,8 +12,8 @@ export const getAll = async (dataCollection) => {
 }
 
 export const getDocumentsByUserId = async (userId, dataCollection) => { 
-    const all = getAll(dataCollection);
-    const list = all.docs.map(doc => doc.uid === userId);
+    const all = await getAll(dataCollection);
+    const list = all.filter(d => d.data().uid=== userId);
     return list;
 }
 

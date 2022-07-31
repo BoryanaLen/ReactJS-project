@@ -13,8 +13,8 @@ import "./assets/css/bootstrap-datetimepicker.min.css";
 import "./assets/css/style.css"
 
 import { useState, useEffect } from 'react'
-import {AuthProvider} from './contexts/AuthContext'
-import {Navigate, Routes, Route, Router} from 'react-router-dom'
+import { AuthProvider} from './contexts/AuthContext'
+import { Routes, Route} from 'react-router-dom'
 import { auth } from './services/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 
@@ -24,6 +24,8 @@ import { AllEmployees } from './components/admin/Employees/AllEmployess';
 import { AdminDashboard } from './components/admin/Dashboard';
 import { EmployeeDashboard } from './components/employee/Dashboard';
 import { Leaves } from './components/employee/Leaves/Leaves';
+import { AttendanceAdmin } from './components/admin/AttendanceAdmin';
+import { LeaveAdmin } from './components/admin/LeavesAdmin';
 
 function App() {
     
@@ -48,6 +50,8 @@ function App() {
                 <Route path="/admin/dashboard" element={< AdminDashboard />} />
                 <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
                 <Route path="/employee/leaves" element={< Leaves />} />
+                <Route path="//admin/employees/leaves" element={< LeaveAdmin />} />
+                <Route path="/admin/employees/attendance" element={< AttendanceAdmin />} />
             </Routes>  
         </div>
     </AuthProvider>

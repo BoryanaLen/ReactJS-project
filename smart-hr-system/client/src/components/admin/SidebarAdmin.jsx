@@ -58,9 +58,9 @@ export const SidebarAdmin = (props) => {
                 { isSideMenu === "employee" ? 
                 
                 <ul >
-                    <li><Link className={pathname.includes('allemployees') ?"active" :pathname.includes('employees-list') ?"active" :""} 
-                        to="/admin/allemployees">All Employees</Link></li>
-                    <li><Link className={pathname.includes('es-admin') ?"active" :""} to="/app/employee/leaves-admin">Leaves </Link></li>
+                    <li><Link className={pathname.includes('allemployees') ?"active":""} to="/admin/allemployees">All Employees</Link></li>
+                    <li><Link className={pathname.includes('employees/leaves') ?"active" :""} to="/admin/employees/leaves">Leaves </Link></li>
+                    <li><Link className={pathname.includes('employees/attendance') ?"active" :""} to="/admin/employees/attendance">Attendance</Link></li>
                 </ul>
                     :"" 
                 }

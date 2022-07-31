@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar_02,Avatar_05,Avatar_09,Avatar_10, Avatar_03,Avatar_08,Avatar_15,Avatar_20,Avatar_25,Avatar_24  } from "../../../assets/imagepath";
 import { Header } from '../../common/Header';
 import { SidebarEmployee } from '../Sidebar';
 import { AddLeave } from './AddLeave';
@@ -16,7 +15,6 @@ import "../../../assets/css/antdstyle.css";
 export const Leaves = () => {
 
     const {currentUser} = useAuthValue();
-
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false)
     const [leaves, setLeaves] = useState([]);
@@ -159,7 +157,7 @@ export const Leaves = () => {
                     style = {{overflowX : 'auto'}}
                     columns={columns}                 
                     // bordered
-                    dataSource={leaves.map(l => l.data)}
+                    dataSource={leaves.map((l, i) => l.data)}
                     rowKey={record => record.id}
                     onChange={console.log("change")}
                     />
