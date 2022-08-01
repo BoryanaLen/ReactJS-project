@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import {useAuthValue} from '../../../contexts/AuthContext';
 
 export const AddLeave = ({
     onLeaveCreate
 }) => {
-    const {currentUser} = useAuthValue();
     const [errors, setErrors] = useState({});
     const [leaveData, setLeaveData] = useState({
         leaveType: '',
@@ -12,8 +10,7 @@ export const AddLeave = ({
         to: '',
         numberOfDays: '',
         leaveReason: '',
-        status: 'Pending',
-        uid: currentUser.uid
+        status: 'Pending'
     });
 
     const changeHandler = (e) => {
@@ -24,19 +21,13 @@ export const AddLeave = ({
     };
 
     const submitHandler = (e) => {
-        console.log(currentUser.uid);
+        const currentUser  = localStorage.getItem('auth');
+        leaveData.uid = currentUser.uid
+;        console.log( currentUser);
         e.preventDefault();
         console.log(leaveData);
         onLeaveCreate(leaveData); 
     };
-
-
-    const minLength = (e, bound) => {
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: leaveData[e.target.name].length < bound,
-        }));
-    }
 
     return(
         <div id="add_leave" className="modal custom-modal fade" role="dialog">

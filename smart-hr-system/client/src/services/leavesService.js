@@ -6,8 +6,9 @@ export const getAllLeaves = async () => {
     return await requester.getAll(dataCollection);
 }
 
-export const getAllLeavesForUser = async (userId) => {   
-    return await requester.getDocumentsByUserId(userId, dataCollection);
+export const getAllLeavesForUser = async () => {   
+   const list = await requester.getDocumentsByUserId(dataCollection);
+   return list;
 }
 
 export const addLeave = async (leaveData) => {

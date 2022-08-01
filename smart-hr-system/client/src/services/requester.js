@@ -4,6 +4,14 @@ import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from '
 
 const db = getFirestore(app);
 
+export const getUser = async() =>{
+    try{
+        return localStorage.getItem('auth');
+    }catch (error) {
+        console.log(error);
+    }
+}
+
 export const getAll = async (dataCollection) => { 
     const dbRef = collection(db, dataCollection);  
     const snapshot = await getDocs(dbRef); 
@@ -11,9 +19,11 @@ export const getAll = async (dataCollection) => {
     return list;
 }
 
-export const getDocumentsByUserId = async (userId, dataCollection) => { 
+export const getDocumentsByUserId = async (dataCollection) => { 
+    const userData = await getUser();
+    const auth = JSON.parse(userData || '{}');
     const all = await getAll(dataCollection);
-    const list = all.filter(d => d.data().uid=== userId);
+    const list = all.filter(d => d.data().uid=== auth.user.uid);
     return list;
 }
 

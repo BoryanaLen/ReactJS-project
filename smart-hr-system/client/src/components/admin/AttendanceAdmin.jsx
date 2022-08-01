@@ -147,7 +147,7 @@ export const AttendanceAdmin = () => {
             <div className="modal-header">
               <h5 className="modal-title">Attendance Info</h5>
               <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true">x</span>
               </button>
             </div>
             <div className="modal-body">
@@ -247,5 +247,5 @@ export const AttendanceAdmin = () => {
       {/* /Attendance Modal */}
     </div>
   </div>
-        );
+    );
   }

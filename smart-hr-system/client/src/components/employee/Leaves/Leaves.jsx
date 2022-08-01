@@ -22,14 +22,13 @@ export const Leaves = () => {
     useEffect(() => {
         setLoading(true)
         leavesService
-            .getAllLeavesForUser(currentUser.uid)
+            .getAllLeavesForUser()
             .then((data) => {
                 console.log(data);
                 const list = data.map(leave => {
-                    return { id: leave.id, data: leave.data() };
+                    return { data: leave.data() };
                 })
                 setLeaves(list);
-                console.log(leaves);
             })
             .finally(() => setLoading(false))
     }, [])

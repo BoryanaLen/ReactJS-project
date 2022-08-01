@@ -3,8 +3,8 @@
  import {Applogo} from '../assets/imagepath';
 
 import {auth} from '../services/firebase'
-import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
-import {useAuthValue} from '../contexts/AuthContext'
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {AuthProvider} from '../contexts/AuthContext'
  
  export const Register = (props) => {
 
@@ -13,7 +13,7 @@ import {useAuthValue} from '../contexts/AuthContext'
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
-    const {setTimeActive} = useAuthValue()
+    const {setTimeActive} = AuthProvider()
 
     const validatePassword = () => {
         let isValid = true

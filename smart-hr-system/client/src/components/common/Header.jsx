@@ -42,9 +42,9 @@ import {headerlogo, Avatar_21} from '../../assets/imagepath'
               <span>Admin</span>
             </a>
             <div className="dropdown-menu">
-              <Link className="dropdown-item" to="/app/profile/employee-profile">My Profile</Link>
+              <Link className="dropdown-item" to="/profile">My Profile</Link>
               <Link className="dropdown-item" to="/settings/companysetting">Settings</Link>
-              <Link className="dropdown-item" to="/login">Logout</Link>
+              <Link className="dropdown-item" to="/">Logout</Link>
             </div>
           </li>
         </ul>
