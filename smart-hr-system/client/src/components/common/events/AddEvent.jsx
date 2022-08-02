@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import {useAuthValue} from '../../../contexts/AuthContext';
 
 export const AddEvent =({
     onEventCreate
 }) => {
-    const {currentUser} = useAuthValue();
     const [errors, setErrors] = useState({});
     const [eventData, setEventData] = useState({
-        name: '',
-        date: '',
-        category: '',
-        uid: currentUser.uid
+        title: '',
+        className: '',
+        start: '',
+        end: ''
     });
 
     const changeHandler = (e) => {
@@ -22,10 +20,9 @@ export const AddEvent =({
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(eventData);
+        eventData.end =eventData.start;
         onEventCreate(eventData); 
     };
-
 
     const minLength = (e, bound) => {
         setErrors(state => ({
@@ -47,8 +44,8 @@ export const AddEvent =({
                 <div className="modal-body">
                     <form onSubmit={submitHandler}>
                         <div className="form-group">
-                            <label htmlFor="name">Event Name <span className="text-danger">*</span></label>
-                            <input className="form-control" type="text" id='name' name='name' value={eventData.name} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
+                            <label htmlFor="title">Event Name <span className="text-danger">*</span></label>
+                            <input className="form-control" type="text" id='title' name='title' value={eventData.title} onChange={changeHandler} onBlur={(e) => minLength(e, 3)}/>
                             {errors.name &&
                                 <p className="form-error">
                                     FEvent name should be at least 3 symbols!
@@ -58,22 +55,22 @@ export const AddEvent =({
                         <div className="form-group">
                             <label>Event Date <span className="text-danger">*</span></label>
                             <div >
-                                <input className="form-control" type="date" id='date' name='date' value={eventData.date} onChange={changeHandler} />
+                                <input className="form-control" type="date" id='start' name='start' value={eventData.start} onChange={changeHandler} />
                             </div>
                         </div>
                             <div className="form-group mb-0">
                                 <label>Choose Category Color</label>
-                                <select className="form-control form-white" data-placeholder="Choose a color..." name="category-color" value={eventData.category} onChange={changeHandler}>
-                                    <option value="success">Success</option>
-                                    <option value="danger">Danger</option>
-                                    <option value="info">Info</option>
-                                    <option value="primary">Primary</option>
-                                    <option value="warning">Warning</option>
-                                    <option value="inverse">Inverse</option>
+                                <select className="form-control form-white" data-placeholder="Choose a color..." id='className' name="className" value={eventData.className} onChange={changeHandler}>
+                                    <option value="bg-success">Success</option>
+                                    <option value="bg-danger">Danger</option>
+                                    <option value="bg-info">Info</option>
+                                    <option value="bg-primary">Primary</option>
+                                    <option value="bg-warning">Warning</option>
+                                    <option value="bg-inverse">Inverse</option>
                                 </select>
                             </div>
                         <div className="submit-section">
-                            <button className="btn btn-primary submit-btn">Submit</button>
+                            <button className="btn btn-primary submit-btn" data-bs-dismiss="modal">Submit</button>
                         </div>
                     </form>
                 </div>

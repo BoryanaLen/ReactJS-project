@@ -3,7 +3,6 @@ import { useState } from 'react';
 export const AddLeave = ({
     onLeaveCreate
 }) => {
-    const [errors, setErrors] = useState({});
     const [leaveData, setLeaveData] = useState({
         leaveType: '',
         from: '',

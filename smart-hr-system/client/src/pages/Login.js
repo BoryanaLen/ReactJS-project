@@ -3,11 +3,10 @@
  import {Applogo} from '../assets/imagepath';
  import { useContext } from "react";
 
-import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
+import {signInWithEmailAndPassword} from 'firebase/auth'
 import {auth} from '../services/firebase';
 import {useNavigate} from 'react-router-dom'
 import {AuthContext } from '../contexts/AuthContext';
-import {useAuthValue } from '../contexts/AuthContext';
  
    
  export const  Login = (props) => {
@@ -15,7 +14,6 @@ import {useAuthValue } from '../contexts/AuthContext';
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const [error, setError] = useState('')
-    const { setTimeActive } = useAuthValue()
     const { userLogin } = useContext(AuthContext);
     const navigate = useNavigate()
 
@@ -23,7 +21,6 @@ import {useAuthValue } from '../contexts/AuthContext';
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
     .then(authData => {
-        // setTimeActive(true)
         userLogin(authData);
         if (email === "admin@admin.com"){
           navigate('/admin/dashboard')

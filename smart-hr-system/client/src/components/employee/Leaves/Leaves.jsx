@@ -4,7 +4,6 @@ import { Header } from '../../common/Header';
 import { SidebarEmployee } from '../Sidebar';
 import { AddLeave } from './AddLeave';
 import * as leavesService  from "../../../services/leavesService";
-import {useAuthValue} from '../../../contexts/AuthContext';
 
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
@@ -14,7 +13,6 @@ import "../../../assets/css/antdstyle.css";
 
 export const Leaves = () => {
 
-    const {currentUser} = useAuthValue();
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false)
     const [leaves, setLeaves] = useState([]);
@@ -24,7 +22,6 @@ export const Leaves = () => {
         leavesService
             .getAllLeavesForUser()
             .then((data) => {
-                console.log(data);
                 const list = data.map(leave => {
                     return { data: leave.data() };
                 })
@@ -147,17 +144,12 @@ export const Leaves = () => {
             {/* /Leave Statistics */}
             <div className="row">
             <div className="col-md-12">
-                <div className="table-responsive">
-                
+                <div className="table-responsive">               
                 <Table className="table-striped"
-                    //   pagination= { {total : data.length,
-                    //     showTotal : (total, range) => `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    //     showSizeChanger : true,onShowSizeChange: onShowSizeChange ,itemRender : itemRender } }
                     style = {{overflowX : 'auto'}}
                     columns={columns}                 
-                    // bordered
                     dataSource={leaves.map((l, i) => l.data)}
-                    rowKey={record => record.id}
+                    rowKey={leaves.map((l, i) => i)}
                     onChange={console.log("change")}
                     />
                 </div>

@@ -7,16 +7,16 @@ import interactionPlugin from '@fullcalendar/interaction'
 import "../../assets/css/calendar.css"
 import { Header } from '../common/Header'
 import { SidebarEmployee } from '../employee/Sidebar'
-import { AddEvent } from '../common/events/AddEvent'
 import  Modalbox from "../common/Modalbox"
-
-import * as eventsService  from '../../services/eventsService';
-import {useAuthValue} from '../../contexts/AuthContext';
+import * as eventsService from '../../services/eventsService'
 
 export const Calendar = (props) => {
+
+    const [menu, setMenu] = useState(false)
+
 	const toggleMobileMenu = () => {
 		setMenu(!menu)
-	}
+	  }
       
     const [startDate, setDate] = useState(new Date()),
             [showCategory, setshowCategory] = useState(false),
@@ -31,24 +31,39 @@ export const Calendar = (props) => {
             [calenderevent, setcalenderevent] = useState(""),
             [weekendsVisible, setweekendsVisible] = useState(true),
             [currentEvents, setscurrentEvents] = useState([]),
-            {currentUser} = useAuthValue(),
-            [menu, setMenu] = useState(false),
-            [loading, setLoading] = useState(false),
             [events, setEvents] = useState([]),
-            defaultEvents = events
+            [loading, setLoading] = useState([]),
+            defaultEvents = [{
+                title: 'Event Name 4',
+                start: Date.now() + 148000000,
+                className: 'bg-purple'
+              },
+              {
+                  title: 'Test Event 1',
+                  start: Date.now(),
+                  end: Date.now(),
+                  className: 'bg-success'
+              },
+              {
+                  title: 'Test Event 2',
+                  start: Date.now() + 168000000,
+                  className: 'bg-info'
+              },
+              {
+                  title: 'Test Event 3',
+                  start: Date.now() + 338000000,
+                  className: 'bg-primary'
+              }]
     ;
 
-    useEffect((currentUser) => {
+    useEffect(() => {
         setLoading(true)
-        console.log(currentUser);
         eventsService
-            .getAllEventsForUser(currentUser.uid)
+            .getAllEventsForUser()
             .then((data) => {
-                console.log(data);
-                const list = data.map(leave => {
-                    return leave.data();
-                })
+                const list = data.map(leave => leave.data())
                 setEvents(list);
+                console.log(list)
             })
             .finally(() => setLoading(false))
     },[])
@@ -63,7 +78,7 @@ export const Calendar = (props) => {
         setshowCategory(true)
     } 
       
-    const handleClose=()=>{
+      const handleClose=()=>{
           setisnewevent(false)
           setiseditdelete(false)
           setshow(false)
@@ -125,18 +140,8 @@ export const Calendar = (props) => {
     const handleClick=()=>{
         setshow(true)
     }
-
-    function eventCreateHandler(eventData){
-        eventsService
-        .addEvent(eventData)
-        .then(doc => {
-            setEvents(oldEvents => [...oldEvents, {id: doc.id, data: eventData}]);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    }
    
+
         return (
         
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
@@ -158,7 +163,7 @@ export const Calendar = (props) => {
 								</ul>
 							</div>
 							<div className="col-auto text-end float-end ml-auto">
-                                <a href="#" className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_event"><i className="fa fa-plus" /> Add Event</a>
+              <a href="#" className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_event"><i className="fa fa-plus" /> Add Event</a>
 							</div>
 						</div>
 					</div>
@@ -182,7 +187,7 @@ export const Calendar = (props) => {
                                     selectMirror={true}
                                     dayMaxEvents={true}
                                     weekends={weekendsVisible}
-                                    initialEvents={defaultEvents} // alternatively, use the `events` setting to fetch from a feed
+                                    initialEvents={events} // alternatively, use the `events` setting to fetch from a feed
                                     select={handleDateSelect}
                                     // eventContent={renderEventContent} // custom render function
                                     eventClick={clickInfo=>handleEventClick(clickInfo)}
@@ -199,9 +204,46 @@ export const Calendar = (props) => {
 					</div>
 				
 				{/*  Add Event modal */ }
-
-                 <AddEvent  onEventCreate={eventCreateHandler}/>
-
+				<div id="add_event" className="modal custom-modal fade" role="dialog">
+					<div className="modal-dialog modal-dialog-centered" role="document">
+						<div className="modal-content">
+							<div className="modal-header">
+								<h5 className="modal-title">Add Event</h5>
+								<button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div className="modal-body">
+								<form>
+									<div className="form-group">
+										<label>Event Name <span className="text-danger">*</span></label>
+										<input className="form-control" type="text" />
+									</div>
+									<div className="form-group">
+										<label>Event Date <span className="text-danger">*</span></label>
+										<div >
+											<input className="form-control" type="date" />
+										</div>
+									</div>
+                  <div className="form-group mb-0">
+                      <label>Choose Category Color</label>
+                      <select className="form-control form-white" data-placeholder="Choose a color..." name="category-color">
+                          <option value="success">Success</option>
+                          <option value="danger">Danger</option>
+                          <option value="info">Info</option>
+                          <option value="primary">Primary</option>
+                          <option value="warning">Warning</option>
+                          <option value="inverse">Inverse</option>
+                      </select>
+                  </div>
+									<div className="submit-section">
+										<button className="btn btn-primary submit-btn">Submit</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 				{/*  /Add Event modal */ }
 				
                 {/*  Create Event modal */ }
@@ -228,5 +270,6 @@ export const Calendar = (props) => {
 			</div>
 		</div>
 		
-        );   
+        );
+    
 }

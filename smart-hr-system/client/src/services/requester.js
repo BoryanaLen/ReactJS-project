@@ -3,14 +3,8 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 
 const db = getFirestore(app);
-
-export const getUser = async() =>{
-    try{
-        return localStorage.getItem('auth');
-    }catch (error) {
-        console.log(error);
-    }
-}
+const user = localStorage.getItem('auth');
+const auth = JSON.parse(user || '{}');
 
 export const getAll = async (dataCollection) => { 
     const dbRef = collection(db, dataCollection);  
@@ -19,15 +13,15 @@ export const getAll = async (dataCollection) => {
     return list;
 }
 
-export const getDocumentsByUserId = async (dataCollection) => { 
-    const userData = await getUser();
-    const auth = JSON.parse(userData || '{}');
+export const getDocumentsByUserId = async (dataCollection) => {    
     const all = await getAll(dataCollection);
     const list = all.filter(d => d.data().uid=== auth.user.uid);
     return list;
 }
 
 export const addDocument = async (data, dataCollection) => {
+    data.uid = auth.user.uid;
+    console.log(data);
     const dbRef = collection(db, dataCollection); 
     const doc = await addDoc(dbRef, data);
     return doc;
