@@ -201,7 +201,7 @@ export const Calendar = (props) => {
                                     selectMirror={true}
                                     dayMaxEvents={true}
                                     weekends={weekendsVisible}
-                                    initialEvents={events} // alternatively, use the `events` setting to fetch from a feed
+                                    events={events} // alternatively, use the `events` setting to fetch from a feed
                                     select={handleDateSelect}
                                     // eventContent={renderEventContent} // custom render function
                                     eventClick={clickInfo=>handleEventClick(clickInfo)}
