@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import "../../assets/css/calendar.css"
 import { Header } from '../common/Header'
 import { SidebarEmployee } from '../employee/Sidebar'
+import { AddEvent } from '../common/events/AddEvent'
 import  Modalbox from "../common/Modalbox"
 import * as eventsService from '../../services/eventsService'
 
@@ -67,6 +68,19 @@ export const Calendar = (props) => {
             })
             .finally(() => setLoading(false))
     },[])
+
+    function onCreateEventHandler(data){
+        eventsService
+        .addEvent(data)
+        .then(doc => {
+            console.log(data);
+            setEvents(oldEvents => [...oldEvents, data]);
+            console.log(events);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
 	
     const handleChange = (date) => {
         setDate(date)
@@ -204,46 +218,7 @@ export const Calendar = (props) => {
 					</div>
 				
 				{/*  Add Event modal */ }
-				<div id="add_event" className="modal custom-modal fade" role="dialog">
-					<div className="modal-dialog modal-dialog-centered" role="document">
-						<div className="modal-content">
-							<div className="modal-header">
-								<h5 className="modal-title">Add Event</h5>
-								<button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div className="modal-body">
-								<form>
-									<div className="form-group">
-										<label>Event Name <span className="text-danger">*</span></label>
-										<input className="form-control" type="text" />
-									</div>
-									<div className="form-group">
-										<label>Event Date <span className="text-danger">*</span></label>
-										<div >
-											<input className="form-control" type="date" />
-										</div>
-									</div>
-                  <div className="form-group mb-0">
-                      <label>Choose Category Color</label>
-                      <select className="form-control form-white" data-placeholder="Choose a color..." name="category-color">
-                          <option value="success">Success</option>
-                          <option value="danger">Danger</option>
-                          <option value="info">Info</option>
-                          <option value="primary">Primary</option>
-                          <option value="warning">Warning</option>
-                          <option value="inverse">Inverse</option>
-                      </select>
-                  </div>
-									<div className="submit-section">
-										<button className="btn btn-primary submit-btn">Submit</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+                    <AddEvent onEventCreate={onCreateEventHandler}/>
 				{/*  /Add Event modal */ }
 				
                 {/*  Create Event modal */ }
