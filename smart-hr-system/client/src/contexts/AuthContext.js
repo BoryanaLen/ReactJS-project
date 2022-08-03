@@ -19,7 +19,7 @@ export function AuthProvider({children, value}) {
         user: auth,
         userLogin,
         userLogout,
-        isAuthenticated: !!auth.accessToken
+        //isAuthenticated: !!auth.accessToken
     }}>
       {children}
     </AuthContext.Provider>

@@ -35,7 +35,7 @@ export const AllEmployees = () => {
         console.log('clear set employee')
     };
 
-    function employeeSeteHandler(employee){
+    function employeeSetHandler(employee){
        setSelectedEmployee(employee);
        console.log('set employee current')
     }
@@ -120,7 +120,7 @@ export const AllEmployees = () => {
                             <div className="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3" key={index}>    
                                 <Employee
                                     employee={employee}
-                                    onSetCurrentEmployeeClick={employeeSeteHandler}
+                                    onSetCurrentEmployeeClick={employeeSetHandler}
                                 /> 
                             </div>                     
                     ))}            

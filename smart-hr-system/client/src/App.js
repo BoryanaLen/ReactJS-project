@@ -24,6 +24,7 @@ import { AllEmployees } from './components/admin/Employees/AllEmployess';
 import { AdminDashboard } from './components/admin/Dashboard';
 import { EmployeeDashboard } from './components/employee/Dashboard';
 import { Leaves } from './components/employee/Leaves/Leaves';
+import { Delete } from './components/employee/Leaves/DeleteLeave';
 import { AttendanceAdmin } from './components/admin/AttendanceAdmin';
 import { LeaveAdmin } from './components/admin/LeavesAdmin';
 import { Calendar } from './components/common/Calendar';
@@ -59,6 +60,7 @@ function App() {
                 <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
                 <Route path="/employee/leaves" element={< Leaves />} />
                 <Route path="/employee/calendar" element={< Calendar />} />
+                <Route path='/employee/leave/delete' element={<Delete/>} />
                
             </Routes>  
         </div>

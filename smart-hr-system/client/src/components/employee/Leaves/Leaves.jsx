@@ -4,31 +4,34 @@ import { Header } from '../../common/Header';
 import { SidebarEmployee } from '../Sidebar';
 import { AddLeave } from './AddLeave';
 import * as leavesService  from "../../../services/leavesService";
+import uuid from 'react-uuid'
 
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import "../../../assets/css/antdstyle.css";
-// import {itemRender,onShowSizeChange} from "../../paginationfunction"
-// import  Delete from "../../../_components/modelbox/Delete"
+import  { Delete } from "../Leaves/DeleteLeave"
 
 export const Leaves = () => {
 
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false)
     const [leaves, setLeaves] = useState([]);
+    const [selectedELeave, setSelectedLeave] = useState(null);
 
     useEffect(() => {
         setLoading(true)
         leavesService
             .getAllLeavesForUser()
             .then((data) => {
-                const list = data.map(leave => {
-                    return { data: leave.data() };
-                })
+                const list = data.map(leave => leave.data())
                 setLeaves(list);
             })
             .finally(() => setLoading(false))
     }, [])
+
+    function onSetCurrentLeaveClick (eventData){
+
+    }
       
     const columns = [
     {
@@ -64,11 +67,11 @@ export const Leaves = () => {
         dataIndex: 'status',
         render: (text, record) => (
         <div className="action-label text-center">
-            <a className="btn btn-white btn-sm btn-rounded" href="">
+            <Link className="btn btn-white btn-sm btn-rounded"to="/employee/leave/delete" >
             <i className={text==="New" ? "fa fa-dot-circle-o text-purple" : text === "Pending" ?
             "fa fa-dot-circle-o text-info" : text === "Approved" ? "fa fa-dot-circle-o text-success" 
             :"fa fa-dot-circle-o text-danger" } /> {text}
-            </a>
+            </Link>
         </div>
         ),
     }
@@ -82,14 +85,14 @@ export const Leaves = () => {
         leavesService
         .addLeave(leaveData)
         .then(doc => {
-            setLeaves(oldLeaves => [...oldLeaves, {id: doc.id, data: leaveData}]);
+            setLeaves(oldLeaves => [...oldLeaves, leaveData]);
         })
         .catch(err => {
             console.log(err);
         });
     }
 
-      return (   
+      return ( loading===false &&
         <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
             <Header onMenuClick={(value) => toggleMobileMenu()} />
@@ -107,7 +110,7 @@ export const Leaves = () => {
                         </ul>
                         </div>
                         <div className="col-auto float-end ml-auto">
-                        <a href="#" className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_leave"><i className="fa fa-plus" /> Add Leave</a>
+                        <button className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_leave"><i className="fa fa-plus" /> Add Leave</button>
                         </div>
                     </div>
                     <AddLeave 
@@ -115,32 +118,6 @@ export const Leaves = () => {
                 />
                 </div>
 
-            <div className="row">
-            <div className="col-md-3">
-                <div className="stats-info">
-                <h6>Annual Leave</h6>
-                <h4>12</h4>
-                </div>
-            </div>
-            <div className="col-md-3">
-                <div className="stats-info">
-                <h6>Medical Leave</h6>
-                <h4>3</h4>
-                </div>
-            </div>
-            <div className="col-md-3">
-                <div className="stats-info">
-                <h6>Other Leave</h6>
-                <h4>4</h4>
-                </div>
-            </div>
-            <div className="col-md-3">
-                <div className="stats-info">
-                <h6>Remaining Leave</h6>
-                <h4>5</h4>
-                </div>
-            </div>
-            </div>
             {/* /Leave Statistics */}
             <div className="row">
             <div className="col-md-12">
@@ -148,8 +125,8 @@ export const Leaves = () => {
                 <Table className="table-striped"
                     style = {{overflowX : 'auto'}}
                     columns={columns}                 
-                    dataSource={leaves.map((l, i) => l.data)}
-                    rowKey={leaves.map((l, i) => i)}
+                    dataSource={leaves}
+                    rowKey={doc => uuid()}
                     onChange={console.log("change")}
                     />
                 </div>

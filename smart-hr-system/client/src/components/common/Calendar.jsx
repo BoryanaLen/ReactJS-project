@@ -82,80 +82,6 @@ export const Calendar = (props) => {
         });
     }
 	
-    const handleChange = (date) => {
-        setDate(date)
-    }
-    const addEvent = () => {
-        setshowEvents(true)
-    }
-    const categoryHandler = () => {
-        setshowCategory(true)
-    } 
-      
-      const handleClose=()=>{
-          setisnewevent(false)
-          setiseditdelete(false)
-          setshow(false)
-          setshowCategory(false)
-          setshowEvents(false)
-          setshowmodel(false)
-    }
-    const handleEventClick = (clickInfo) => {  
-        setiseditdelete(false)
-        setevent_title(clickInfo.event.title)
-        setcalenderevent(clickInfo.event) 
-    }
-    
-    const handleDateSelect = (selectInfo) => {
-        setisnewevent(true)
-        setaddneweventobj(selectInfo)
-    }
-    const addnewevent=()=>{
-        let calendarApi = addneweventobj.view.calendar
-
-        calendarApi.unselect() // clear date selection
-
-        if (event_title) {
-            calendarApi.addEvent({
-            id: 10,
-            title : event_title,
-            className: category_color,
-            start: addneweventobj.startStr,
-            end: addneweventobj.endStr,
-            allDay: addneweventobj.allDay
-            })
-        }   
-        setisnewevent(false)
-    }
-      
-    const onupdateModalClose=()=> {
-        setiseditdelete(false)
-        setevent_title('')
-    }
-    const oncreateeventModalClose=()=> {
-        setevent_title("")
-        setisnewevent(false)
-    }
-    const removeevent=()=>{
-        calenderevent.remove()
-        setiseditdelete(false)
-    }
-    const clickupdateevent=()=>{
-        const newArray = defaultEvents
-        for(let i=0;i<newArray.length;i++){
-            if(newArray[i].id === parseInt(calenderevent.id)){
-            newArray[i].title = event_title
-            }
-        }
-        defaultEvents = newArray
-        setiseditdelete(false)
-    }
-    
-    const handleClick=()=>{
-        setshow(true)
-    }
-   
-
         return (
         
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
@@ -177,7 +103,7 @@ export const Calendar = (props) => {
 								</ul>
 							</div>
 							<div className="col-auto text-end float-end ml-auto">
-              <a href="#" className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_event"><i className="fa fa-plus" /> Add Event</a>
+                            <button href="#" className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_event"><i className="fa fa-plus" /> Add Event</button>
 							</div>
 						</div>
 					</div>
@@ -202,9 +128,9 @@ export const Calendar = (props) => {
                                     dayMaxEvents={true}
                                     weekends={weekendsVisible}
                                     events={events} // alternatively, use the `events` setting to fetch from a feed
-                                    select={handleDateSelect}
+                                    //select={handleDateSelect}
                                     // eventContent={renderEventContent} // custom render function
-                                    eventClick={clickInfo=>handleEventClick(clickInfo)}
+                                    //eventClick={clickInfo=>handleEventClick(clickInfo)}
                                     // eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
                                     /* you can update a remote database when these fire:
                                     eventAdd={function(){}}
@@ -239,7 +165,7 @@ export const Calendar = (props) => {
                 </div>
 				{/*  /Create Event modal */ }
 			
-                <Modalbox show={showmodel} handleClose={handleClose} />
+                {/* <Modalbox show={showmodel} handleClose={handleClose} /> */}
 				
 				</div>			
 			</div>
