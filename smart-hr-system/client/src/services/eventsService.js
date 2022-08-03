@@ -2,6 +2,10 @@ import * as requester from "./requester";
 
 const dataCollection = 'events';
 
+export const isUserAdmin = async() => {
+    return requester.isUserAdmin();
+}
+
 export const getAllEvents = async () => {   
     return  requester.getAll(dataCollection);
 }

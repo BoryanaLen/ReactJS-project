@@ -21,8 +21,8 @@ export const AddLeave = ({
 
     const submitHandler = (e) => {
         const currentUser  = localStorage.getItem('auth');
-        leaveData.uid = currentUser.uid
-;        console.log( currentUser);
+        leaveData.uid = currentUser.uid;        
+        console.log( currentUser);
         e.preventDefault();
         console.log(leaveData);
         onLeaveCreate(leaveData); 

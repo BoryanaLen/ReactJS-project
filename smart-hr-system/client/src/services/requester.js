@@ -6,6 +6,10 @@ const db = getFirestore(app);
 const user = localStorage.getItem('auth');
 const auth = JSON.parse(user || '{}');
 
+export const isUserAdmin = async () => {    
+    return auth.user.email==="admin@admin.com";
+}
+
 export const getAll = async (dataCollection) => { 
     const dbRef = collection(db, dataCollection);  
     const snapshot = await getDocs(dbRef); 

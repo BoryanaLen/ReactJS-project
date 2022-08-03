@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import * as eventsService from '../../services/eventsService'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -8,54 +9,20 @@ import "../../assets/css/calendar.css"
 import { Header } from '../common/Header'
 import { SidebarEmployee } from '../employee/Sidebar'
 import { AddEvent } from '../common/events/AddEvent'
-import  Modalbox from "../common/Modalbox"
-import * as eventsService from '../../services/eventsService'
+import { SidebarAdmin } from '../admin/SidebarAdmin';
+
 
 export const Calendar = (props) => {
 
-    const [menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(false);  
+    const [weekendsVisible, setweekendsVisible] = useState(true);
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState([]);
+    const [iscurrentUserAdmin, setIsCurrentUserAdmin] = useState([]);
 
-	const toggleMobileMenu = () => {
+    const toggleMobileMenu = () => {
 		setMenu(!menu)
-	  }
-      
-    const [startDate, setDate] = useState(new Date()),
-            [showCategory, setshowCategory] = useState(false),
-            [showmodel, setshowmodel] = useState(false),
-            [showEvents, setshowEvents] = useState(false),
-            [show, setshow] = useState(false),
-            [iseditdelete, setiseditdelete] = useState(false),
-            [addneweventobj, setaddneweventobj] = useState(null),
-            [isnewevent, setisnewevent] = useState(false),
-            [event_title, setevent_title] = useState(""),
-            [category_color, setcategory_color] = useState(""),
-            [calenderevent, setcalenderevent] = useState(""),
-            [weekendsVisible, setweekendsVisible] = useState(true),
-            [currentEvents, setscurrentEvents] = useState([]),
-            [events, setEvents] = useState([]),
-            [loading, setLoading] = useState([]),
-            defaultEvents = [{
-                title: 'Event Name 4',
-                start: Date.now() + 148000000,
-                className: 'bg-purple'
-              },
-              {
-                  title: 'Test Event 1',
-                  start: Date.now(),
-                  end: Date.now(),
-                  className: 'bg-success'
-              },
-              {
-                  title: 'Test Event 2',
-                  start: Date.now() + 168000000,
-                  className: 'bg-info'
-              },
-              {
-                  title: 'Test Event 3',
-                  start: Date.now() + 338000000,
-                  className: 'bg-primary'
-              }]
-    ;
+	}
 
     useEffect(() => {
         setLoading(true)
@@ -67,6 +34,11 @@ export const Calendar = (props) => {
                 console.log(list)
             })
             .finally(() => setLoading(false))
+        eventsService.isUserAdmin()
+        .then((result) => {
+            setIsCurrentUserAdmin(result);
+            console.log(result);
+        })
     },[])
 
     function onCreateEventHandler(data){
@@ -81,13 +53,14 @@ export const Calendar = (props) => {
             console.log(err);
         });
     }
+
 	
         return (
         
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
             <Header onMenuClick={(value) => toggleMobileMenu()} />
-            <SidebarEmployee /> 
+            {iscurrentUserAdmin?  <SidebarAdmin/> :  <SidebarEmployee/>}
 
             <div className="page-wrapper">
                 <div className="content container-fluid">
