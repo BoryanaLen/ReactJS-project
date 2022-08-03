@@ -1,15 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Header } from '../../common/Header';
-import { SidebarEmployee } from '../Sidebar';
-import { AddLeave } from './AddLeave';
-import * as leavesService  from "../../../services/leavesService";
+import { Header } from '../common/Header';
+import { SidebarEmployee } from './Sidebar';
+import { AddLeave } from '../common/Leaves/AddLeave';
+import * as leavesService  from "../../services/leavesService";
 import uuid from 'react-uuid'
 
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
-import "../../../assets/css/antdstyle.css";
-import  { Delete } from "../Leaves/DeleteLeave"
+import "../../assets/css/antdstyle.css";
+import  { Delete } from "../common/Leaves/DeleteLeave"
 
 export const Leaves = () => {
 

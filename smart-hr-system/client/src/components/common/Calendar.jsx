@@ -137,8 +137,6 @@ export const Calendar = (props) => {
                     </div>
                 </div>
 				{/*  /Create Event modal */ }
-			
-                {/* <Modalbox show={showmodel} handleClose={handleClose} /> */}
 				
 				</div>			
 			</div>
