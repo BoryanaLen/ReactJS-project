@@ -55,7 +55,7 @@ export const Calendar = (props) => {
     }
 
 	
-        return (
+        return (!loading &&
         
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           

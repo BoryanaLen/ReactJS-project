@@ -1,11 +1,43 @@
-import React, {useState } from 'react';
-import {Avatar_02,Avatar_04,Avatar_05,Avatar_07,Avatar_08,Avatar_09} from '../../assets/imagepath';
+import {useState, useEffect } from 'react';
+import {Avatar_02,Avatar_19,Avatar_06,Avatar_14,Avatar_07} from '../../assets/imagepath';
+import { Link } from 'react-router-dom';
 import { Header } from '../common/Header';
 import { SidebarEmployee } from './Sidebar';
+import * as requester from '../../services/requester'
+import * as eventsService from '../../services/eventsService'
 
 export const EmployeeDashboard = () => {
 
-  const [menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(false)
+    const [userName, setUserName] = useState("");
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState([]);
+
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
+    useEffect(() => {
+        async function getData() {
+            requester.getUser()
+            .then(user => {
+                setUserName(user.email)
+            })
+        }     
+        getData();
+
+        setLoading(true)
+        eventsService
+            .getAllEventsForUser()
+            .then((data) => {
+                const list = data.map(leave => {
+                    return { id: leave.id, data: leave.data() };
+                })
+                setEvents(list);
+                console.log(list)
+            })
+            .finally(() => setLoading(false))
+       
+    },[])
 
 	const toggleMobileMenu = () => {
 		setMenu(!menu)
@@ -27,159 +59,61 @@ export const EmployeeDashboard = () => {
                       <img alt="" src={Avatar_02} />
                     </div>
                     <div className="welcome-det">
-                      <h3>Welcome, John Doe</h3>
-                      <p>Monday, 20 May 2019</p>
+                      <h3>Welcome, {userName}</h3>
+                      <p>{date}</p>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div className="row">
                 <div className="col-lg-8 col-md-8">
-                  <section className="dash-section">
-                    <h1 className="dash-sec-title">Today</h1>
-                    <div className="dash-sec-content">
-                      <div className="dash-info-list">
-                        <a href="#" className="dash-card text-danger">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-hourglass-o" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>Richard Miles is off sick today</p>
-                            </div>
-                            <div className="dash-card-avatars">
-                              <div className="e-avatar"><img src={Avatar_09} alt="" /></div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div className="dash-info-list">
-                        <a href="#" className="dash-card">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-suitcase" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>You are away today</p>
-                            </div>
-                            <div className="dash-card-avatars">
-                              <div className="e-avatar"><img src={Avatar_02} alt="" /></div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div className="dash-info-list">
-                        <a href="#" className="dash-card">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-building-o" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>You are working from home today</p>
-                            </div>
-                            <div className="dash-card-avatars">
-                              <div className="e-avatar"><img src={Avatar_02} alt="" /></div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </section>
-                  <section className="dash-section">
-                    <h1 className="dash-sec-title">Tomorrow</h1>
-                    <div className="dash-sec-content">
-                      <div className="dash-info-list">
-                        <div className="dash-card">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-suitcase" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>2 people will be away tomorrow</p>
-                            </div>
-                            <div className="dash-card-avatars">
-                              <a href="#" className="e-avatar"><img src={Avatar_04} alt="" /></a>
-                              <a href="#" className="e-avatar"><img src={Avatar_08} alt="" /></a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                  <section className="dash-section">
-                    <h1 className="dash-sec-title">Next seven days</h1>
-                    <div className="dash-sec-content">
-                      <div className="dash-info-list">
-                        <div className="dash-card">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-suitcase" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>2 people are going to be away</p>
-                            </div>
-                            <div className="dash-card-avatars">
-                              <a href="#" className="e-avatar"><img src={Avatar_05} alt="" /></a>
-                              <a href="#" className="e-avatar"><img src={Avatar_07} alt="" /></a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="dash-info-list">
-                        <div className="dash-card">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-user-plus" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>Your first day is going to be  on Thursday</p>
-                            </div>
-                            <div className="dash-card-avatars">
-                              <div className="e-avatar"><img src={Avatar_02} alt="" /></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="dash-info-list">
-                        <a href="" className="dash-card">
-                          <div className="dash-card-container">
-                            <div className="dash-card-icon">
-                              <i className="fa fa-calendar" />
-                            </div>
-                            <div className="dash-card-content">
-                              <p>It's Spring Bank Holiday  on Monday</p>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </section>
+                <div className="card card-table flex-fill">
+                <div className="card-header">
+                  <h3 className="card-title mb-0">Events</h3>
+                </div>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table custom-table mb-0">
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th className="text-end">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        { events &&
+                            events.slice(0, 5).map((event, index) => (
+                                <tr key={index}>
+                                <td>{event.data.title}</td>
+                                <td>{event.data.start}</td>
+                                <td>{event.data.className}</td>
+                                <td className="text-end">
+                                  <div className="dropdown dropdown-action">
+                                    <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i className="material-icons">more_vert</i></a>
+                                    <div className="dropdown-menu dropdown-menu-right">
+                                      <a className="dropdown-item" href="#"><i className="fa fa-pencil m-r-5" /> Edit</a>
+                                      <a className="dropdown-item" href="#"><i className="fa fa-trash-o m-r-5" /> Delete</a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>                 
+                        ))}            
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div className="card-footer">
+                  <Link to = "/app/employees/clients">View all clients</Link>
+                </div>
+              </div>
                 </div>
                 <div className="col-lg-4 col-md-4">
                   <div className="dash-sidebar">
-                    <section>
-                      <h5 className="dash-title">Projects</h5>
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="time-list">
-                            <div className="dash-stats-list">
-                              <h4>71</h4>
-                              <p>Total Tasks</p>
-                            </div>
-                            <div className="dash-stats-list">
-                              <h4>14</h4>
-                              <p>Pending Tasks</p>
-                            </div>
-                          </div>
-                          <div className="request-btn">
-                            <div className="dash-stats-list">
-                              <h4>2</h4>
-                              <p>Total Projects</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
                     <section>
                       <h5 className="dash-title">Your Leave</h5>
                       <div className="card">
@@ -201,7 +135,7 @@ export const EmployeeDashboard = () => {
                       </div>
                     </section>
                     <section>
-                      <h5 className="dash-title">Your time off allowance</h5>
+                      <h5 className="dash-title">Your Events</h5>
                       <div className="card">
                         <div className="card-body">
                           <div className="time-list">
@@ -215,16 +149,8 @@ export const EmployeeDashboard = () => {
                             </div>
                           </div>
                           <div className="request-btn">
-                            <a className="btn btn-primary" href="#">Apply Time Off</a>
+                            <a className="btn btn-primary" href="#">Apply Event</a>
                           </div>
-                        </div>
-                      </div>
-                    </section>
-                    <section>
-                      <h5 className="dash-title">Upcoming Holiday</h5>
-                      <div className="card">
-                        <div className="card-body text-center">
-                          <h4 className="holiday-title mb-0">Mon 20 May 2019 - Ramzan</h4>
                         </div>
                       </div>
                     </section>

@@ -72,7 +72,7 @@ import * as requester from '../../services/requester'
                 <div className="dropdown-menu">
                 {/* <Link className="dropdown-item" to="/profile">My Profile</Link>
                 <Link className="dropdown-item" to="/settings/companysetting">Settings</Link> */}
-                <Link className="dropdown-item" to="/">Logout</Link>
+                <Link className="dropdown-item" to="/" onClick={onLogoutClick}>Logout</Link>
                 </div>
             </li>
 

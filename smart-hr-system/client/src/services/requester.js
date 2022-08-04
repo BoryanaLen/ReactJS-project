@@ -7,12 +7,12 @@ const db = getFirestore(app);
 export const getUser = async () => {   
     const user = localStorage.getItem('auth');
     const auth = JSON.parse(user || '{}'); 
-    console.log(auth.user.email);
     return auth.user;
 }
 
-export const isUserAdmin = async () => {    
-    return getUser().email==="admin@admin.com";
+export const isUserAdmin = async () => { 
+    const user = await getUser();   
+    return user.email==="admin@admin.com";
 }
 
 export const getAll = async (dataCollection) => { 
@@ -24,12 +24,14 @@ export const getAll = async (dataCollection) => {
 
 export const getDocumentsByUserId = async (dataCollection) => {    
     const all = await getAll(dataCollection);
-    const list = all.filter(d => d.data().uid=== getUser().uid);
+    const user = await getUser();
+    const list = all.filter(d => d.data().uid=== user.uid);
     return list;
 }
 
 export const addDocument = async (data, dataCollection) => {
-    data.uid = getUser().uid;
+    const user = await getUser();
+    data.uid = user.uid;
     console.log(data);
     const dbRef = collection(db, dataCollection); 
     const doc = await addDoc(dbRef, data);

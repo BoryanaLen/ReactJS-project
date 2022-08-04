@@ -4,7 +4,6 @@
 
 import {auth} from '../services/firebase'
 import {createUserWithEmailAndPassword} from 'firebase/auth'
-import {AuthProvider} from '../contexts/AuthContext'
  
  export const Register = (props) => {
 
@@ -13,7 +12,6 @@ import {AuthProvider} from '../contexts/AuthContext'
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
-    const {setTimeActive} = AuthProvider()
 
     const validatePassword = () => {
         let isValid = true
@@ -32,7 +30,6 @@ import {AuthProvider} from '../contexts/AuthContext'
         if(validatePassword()) {
             createUserWithEmailAndPassword(auth, email, password)
             .then(() => { 
-              setTimeActive(true)
               navigate('/')
             })
             .catch(err => setError(err.message))
