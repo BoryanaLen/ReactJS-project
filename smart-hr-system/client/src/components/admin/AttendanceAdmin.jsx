@@ -1,5 +1,5 @@
 
-import React, {useEffect,useState } from 'react';
+import {useEffect,useState } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import  Tableavatar from "../common/Tableavatar"
@@ -49,10 +49,6 @@ export const AttendanceAdmin = () => {
         {/* Search Filter */}
         <div className="row filter-row">
           <div className="col-sm-6 col-md-3">  
-            <div className="form-group form-focus">
-              <input type="text" className="form-control floating" />
-              <label className="focus-label">Employee Name</label>
-            </div>
           </div>
           <div className="col-sm-6 col-md-3"> 
             <div className="form-group form-focus select-focus">
@@ -65,7 +61,7 @@ export const AttendanceAdmin = () => {
                 <option>May</option>
                 <option>Jun</option>
                 <option>Jul</option>
-                <option>Aug</option>
+                <option>Auhg</option>
                 <option>Sep</option>
                 <option>Oct</option>
                 <option>Nov</option>
@@ -78,11 +74,9 @@ export const AttendanceAdmin = () => {
             <div className="form-group form-focus select-focus">
               <select className="select floating"> 
                 <option>-</option>
-                <option>2019</option>
-                <option>2018</option>
-                <option>2017</option>
-                <option>2016</option>
-                <option>2015</option>
+                <option>2022</option>
+                <option>2021</option>
+                <option>2020</option>
               </select>
               <label className="focus-label">Select Year</label>
             </div>

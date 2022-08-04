@@ -3,11 +3,16 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 
 const db = getFirestore(app);
-const user = localStorage.getItem('auth');
-const auth = JSON.parse(user || '{}');
+
+export const getUser = async () => {   
+    const user = localStorage.getItem('auth');
+    const auth = JSON.parse(user || '{}'); 
+    console.log(auth.user.email);
+    return auth.user;
+}
 
 export const isUserAdmin = async () => {    
-    return auth.user.email==="admin@admin.com";
+    return getUser().email==="admin@admin.com";
 }
 
 export const getAll = async (dataCollection) => { 
@@ -19,12 +24,12 @@ export const getAll = async (dataCollection) => {
 
 export const getDocumentsByUserId = async (dataCollection) => {    
     const all = await getAll(dataCollection);
-    const list = all.filter(d => d.data().uid=== auth.user.uid);
+    const list = all.filter(d => d.data().uid=== getUser().uid);
     return list;
 }
 
 export const addDocument = async (data, dataCollection) => {
-    data.uid = auth.user.uid;
+    data.uid = getUser().uid;
     console.log(data);
     const dbRef = collection(db, dataCollection); 
     const doc = await addDoc(dbRef, data);
