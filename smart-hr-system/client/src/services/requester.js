@@ -1,5 +1,6 @@
-import { app } from './firebase'
+import { app, storage } from './firebase'
 import { getFirestore } from 'firebase/firestore';
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage"
 import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 
 const db = getFirestore(app);
@@ -60,4 +61,20 @@ export const deleteDocument = async (docId, dataCollection) => {
             console.log(error);
         })
 }
+
+
+    export const uploadFile = (e) => {
+        e.preventDefault()
+        const file = e.target[0]?.files[0]
+    
+        if (!file) return null;
+        const storageRef = ref(storage, `files/${file.name}`)
+        uploadBytes(storageRef, file)
+        .then((snapshot) => {
+        e.target[0].value = ''
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+            console.log(downloadURL)
+        })
+     })
+    }
 

@@ -29,6 +29,9 @@ import { AttendanceAdmin } from './components/admin/AttendanceAdmin';
 import { LeaveAdmin } from './components/admin/LeavesAdmin';
 import { Calendar } from './components/common/Calendar';
 import { Profile } from './components/common/Profile';
+import { JobsList} from './components/jobs/JobsList';
+import { ManagedJobs } from './components/jobs/ManagedJobs';
+import { JobDetails } from './components/jobs/JobDetails';
 
 function App() {
     
@@ -50,12 +53,15 @@ function App() {
                 <Route path="/login" element={ <Login/> } />
                 <Route path="/register" element={ <Register/> } />
                 <Route path="/profile" element={ <Profile/> } />
+                <Route path="/applyjob" element={< JobsList />} />
+                <Route path='/job-details'element={< JobDetails />} />
 
                 <Route path="/admin/allemployees" element={< AllEmployees />} />
                 <Route path="/admin/dashboard" element={< AdminDashboard />} />
                 <Route path="/admin/employees/leaves" element={< LeaveAdmin />} />
                 <Route path="/admin/employees/attendance" element={< AttendanceAdmin />} />
                 <Route path="/admin/calendar" element={< Calendar />} />
+                <Route path="/admin/jobs" element={< ManagedJobs />} />
 
                 <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
                 <Route path="/employee/leaves" element={< Leaves />} />

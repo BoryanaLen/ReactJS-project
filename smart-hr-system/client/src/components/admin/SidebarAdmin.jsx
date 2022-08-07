@@ -54,17 +54,27 @@ export const SidebarAdmin = (props) => {
                 </li>  
 
                 <li className="submenu" >             
-                <a href="#" className= "subdrop" onClick={()=> toggleSidebar(isSideMenu =="employee" ? "": "employee")}><i className="la la-user" /> <span> Employees</span> <span className="menu-arrow" /></a>
+                <a href="#" className= "subdrop" onClick={()=> toggleSidebar(isSideMenu ==="employee" ? "": "employee")}><i className="la la-user" /> <span> Employees</span> <span className="menu-arrow" /></a>
                 { isSideMenu === "employee" ? 
                 
-                <ul >
-                    <li><Link className={pathname.includes('allemployees') ?"active":""} to="/admin/allemployees">All Employees</Link></li>
-                    <li><Link className={pathname.includes('employees/leaves') ?"active" :""} to="/admin/employees/leaves">Leaves </Link></li>
-                    <li><Link className={pathname.includes('employees/attendance') ?"active" :""} to="/admin/employees/attendance">Attendance</Link></li>
-                </ul>
-                    :"" 
+                    <ul >
+                        <li><Link className={pathname.includes('allemployees') ?"active":""} to="/admin/allemployees">All Employees</Link></li>
+                        <li><Link className={pathname.includes('employees/leaves') ?"active" :""} to="/admin/employees/leaves">Leaves </Link></li>
+                        <li><Link className={pathname.includes('employees/attendance') ?"active" :""} to="/admin/employees/attendance">Attendance</Link></li>
+                    </ul>
+                        :"" 
                 }
                 </li>
+
+                <li className="submenu">
+                <a href="#" className={isSideMenu === "jobs" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu ==="jobs" ? "": "jobs")}><i className="la la-briefcase" /> <span> Jobs </span> <span className="menu-arrow" /></a>
+                { isSideMenu === "jobs" ? 
+                <ul>
+                  <li><Link className={pathname === ('/admin/jobs') ?"active" :""} to="/admin/jobs"> Manage Jobs </Link></li>             
+                </ul>
+                  :"" 
+                }
+              </li>
             </ul>
             </div>
         </div>

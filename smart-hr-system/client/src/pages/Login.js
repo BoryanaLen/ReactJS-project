@@ -33,7 +33,7 @@ import {AuthContext } from '../contexts/AuthContext';
   }
     return (
          <div className="account-content">
-           <Link to="/applyjob/joblist" className="btn btn-primary apply-btn">Apply Job</Link>
+           <Link to="/applyjob" className="btn btn-primary apply-btn">Apply Job</Link>
            <div className="container">
              {/* Account Logo */}
              <div className="account-logo">
@@ -60,11 +60,11 @@ import {AuthContext } from '../contexts/AuthContext';
                        </div>
                      </div>             
                    </div>
-                   <div className="col-auto">
+                   {/* <div className="col-auto">
                          <Link className="text-muted" to="/forgotpassword">
                            Forgot password?
                          </Link>
-                       </div>
+                       </div> */}
                    <div className="form-group text-center">
                    <button className="btn btn-primary account-btn" type="submit" > Login </button>                    
                    </div>

@@ -9,7 +9,6 @@ import uuid from 'react-uuid'
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import "../../assets/css/antdstyle.css";
-import  { Delete } from "../common/Leaves/DeleteLeave"
 
 export const Leaves = () => {
 

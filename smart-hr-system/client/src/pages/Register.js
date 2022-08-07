@@ -41,7 +41,7 @@ import {createUserWithEmailAndPassword} from 'firebase/auth'
 
        return (
          <div className="account-content">
-           <Link to="/applyjob/joblist" className="btn btn-primary apply-btn">Apply Job</Link>
+           <Link to="/applyjob" className="btn btn-primary apply-btn">Apply Job</Link>
            <div className="container">
              <div className="account-logo">
                <Link to="/app/main/dashboard"><img src={Applogo} alt="Dreamguy's Technologies" /></Link>
