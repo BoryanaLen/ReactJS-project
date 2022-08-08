@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useContext } from "react";
+import { AuthContext } from '../../../contexts/AuthContext';
   
   export const Editemployee = ({
     employeeData,
@@ -7,6 +9,7 @@ import { useState } from 'react';
   }) => {
 
     const [values, setValues] = useState({...employeeData});
+    const { role } = useContext(AuthContext);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -20,7 +23,7 @@ import { useState } from 'react';
         }));
     };
     
-    return ( 
+    return ( role==="admin" &&
       <div id="edit_employee" className="modal custom-modal fade" role="dialog">
         <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div className="modal-content">

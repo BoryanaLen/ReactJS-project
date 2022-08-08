@@ -1,9 +1,14 @@
+import { useContext } from "react";
+import { AuthContext } from '../../../contexts/AuthContext';
+
 export const DeleteEmployee = ({
     onEmployeeDelete,
     onCancelAction
 }) =>{
 
-    return(
+    const { role } = useContext(AuthContext);
+
+    return(role==="admin" &&
         <div className="modal custom-modal fade" id="delete_employee" role="dialog">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">

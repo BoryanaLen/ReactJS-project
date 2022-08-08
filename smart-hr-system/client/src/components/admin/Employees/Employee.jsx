@@ -1,11 +1,14 @@
 import { Avatar_02 } from "../../../assets/imagepath"
 import { Link } from 'react-router-dom';
+import { useContext } from "react";
+import { AuthContext } from '../../../contexts/AuthContext';
 
 export const Employee = ({
     employee,
     onSetCurrentEmployeeClick
 }) =>{
-    return(
+    const { role } = useContext(AuthContext);
+    return( role==="admin" &&
         <div  >     
             <div className="profile-widget">
                 <div className="profile-img">

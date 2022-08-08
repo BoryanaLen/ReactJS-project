@@ -10,33 +10,33 @@ import {AuthContext } from '../contexts/AuthContext';
 import * as usersService from '../services/usersService'
  
    
- export const  Login = (props) => {
+export const  Login = (props) => {
    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const [error, setError] = useState('')
     const { userLogin} = useContext(AuthContext);
-    const navigate = useNavigate();
-    
+    const navigate = useNavigate();   
 
-  const onSubmit = e => {
-    e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
-    .then(authData => {
-        usersService.getAllUsers()
-        .then( data => {
-            const roleData = data.map(x => x.data()).find(x => x.userId===authData.user.uid).role
-            userLogin(authData, roleData);
-            if (roleData === 'admin'){
-                navigate('/admin/dashboard')
-            }
-            else{
-                navigate('employee/dashboard')
-            }
+    const onSubmit = e => {
+        e.preventDefault()
+        signInWithEmailAndPassword(auth, email, password)
+        .then(authData => {
+            usersService.getAllUsers()
+            .then( data => {
+                const roleData = data.map(x => x.data()).find(x => x.userId===authData.user.uid).role
+                userLogin(authData, roleData);
+                if (roleData === 'admin'){
+                    navigate('/admin/dashboard')
+                }
+                else{
+                    navigate('employee/dashboard')
+                }
+            })
         })
-    })
-    .catch(err => setError(err.message))
-  }
+        .catch(err => setError(err.message))
+    }
+
     return (
          <div className="account-content">
            <Link to="/applyjob" className="btn btn-primary apply-btn">Apply Job</Link>

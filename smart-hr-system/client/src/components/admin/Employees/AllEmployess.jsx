@@ -8,13 +8,16 @@ import * as employeeService  from "../../../services/employeeService";
 import { DeleteEmployee } from './DeleteEmployee';
 import { Header } from '../../common/Header';
 import { SidebarAdmin } from '../SidebarAdmin';
+import { useContext } from "react";
+import { AuthContext } from '../../../contexts/AuthContext';
 
 export const AllEmployees = () => {
 
     const [loading, setLoading] = useState(false);
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
-    const [menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(false);
+    const { role } = useContext(AuthContext);
 
     useEffect(() => {
         setLoading(true)
@@ -93,7 +96,7 @@ export const AllEmployees = () => {
 	  }
 
 
-    return ( !loading &&
+    return ( !loading &&  role==="admin" &&
         <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}>      
         <Header onMenuClick={(value) => toggleMobileMenu()} />
         <SidebarAdmin /> 

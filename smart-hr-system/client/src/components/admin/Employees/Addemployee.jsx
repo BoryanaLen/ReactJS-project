@@ -1,8 +1,11 @@
-  import { useState } from 'react';
+  import { useState, useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
 
   export const Addemployee = ({
     onEmployeeCreate
    }) => {
+
+    const { role } = useContext(AuthContext);
 
     const [errors, setErrors] = useState({});
     const [employeeData, setEmployeeData] = useState({
@@ -37,7 +40,7 @@
         }));
     }
     
-    return ( 
+    return ( role==="admin" && 
        <div id="add_employee" className="modal custom-modal fade" role="dialog">
            <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
              <div className="modal-content">
