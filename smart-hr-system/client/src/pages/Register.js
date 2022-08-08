@@ -3,7 +3,8 @@
  import {Applogo} from '../assets/imagepath';
 
 import {auth} from '../services/firebase'
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {createUserWithEmailAndPassword } from 'firebase/auth'
+import * as usersService from '../services/usersService'
  
  export const Register = (props) => {
 
@@ -29,8 +30,18 @@ import {createUserWithEmailAndPassword} from 'firebase/auth'
         setError('')
         if(validatePassword()) {
             createUserWithEmailAndPassword(auth, email, password)
-            .then(() => { 
-              navigate('/')
+            .then((data) => { 
+                   const user = {
+                    userId: data.user.uid,
+                    email: data.user.email,
+                    role: 'user'
+                   }
+                   console.log(user)
+                   usersService.addUser(user)
+                   .then(res => 
+                    console.log('user added')
+                   )
+                navigate('/')
             })
             .catch(err => setError(err.message))
         }

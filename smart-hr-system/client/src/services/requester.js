@@ -63,18 +63,16 @@ export const deleteDocument = async (docId, dataCollection) => {
 }
 
 
-    export const uploadFile = (e) => {
-        e.preventDefault()
-        const file = e.target[0]?.files[0]
-    
+    export const uploadFile = (file) => {
         if (!file) return null;
         const storageRef = ref(storage, `files/${file.name}`)
         uploadBytes(storageRef, file)
         .then((snapshot) => {
-        e.target[0].value = ''
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
+        const url =getDownloadURL(snapshot.ref).then((downloadURL) => {
             console.log(downloadURL)
         })
+        console.log(url)
+        return url;
      })
     }
 

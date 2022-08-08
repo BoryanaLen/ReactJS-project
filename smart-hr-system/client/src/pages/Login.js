@@ -7,6 +7,7 @@ import {signInWithEmailAndPassword} from 'firebase/auth'
 import {auth} from '../services/firebase';
 import {useNavigate} from 'react-router-dom'
 import {AuthContext } from '../contexts/AuthContext';
+import * as usersService from '../services/usersService'
  
    
  export const  Login = (props) => {
@@ -21,6 +22,11 @@ import {AuthContext } from '../contexts/AuthContext';
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
     .then(authData => {
+        usersService.getAllUsers()
+        .then( data => {
+            const role = data.map(x => x.data()).find(x => x.userId===authData.user.uid).role
+            authData.user.role = role;
+        })
         userLogin(authData);
         if (email === "admin@admin.com"){
           navigate('/admin/dashboard')
