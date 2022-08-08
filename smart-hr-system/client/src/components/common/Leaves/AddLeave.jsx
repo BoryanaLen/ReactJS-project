@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 export const AddLeave = ({
     onLeaveCreate
 }) => {
+    
+    const { role } = useContext(AuthContext);
     const [leaveData, setLeaveData] = useState({
         leaveType: '',
         from: '',
@@ -28,7 +31,7 @@ export const AddLeave = ({
         onLeaveCreate(leaveData); 
     };
 
-    return(
+    return((role==="admin" || role==="user") &&
         <div id="add_leave" className="modal custom-modal fade" role="dialog">
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">

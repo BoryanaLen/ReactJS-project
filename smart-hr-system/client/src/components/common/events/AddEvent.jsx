@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 export const AddEvent =({
     onEventCreate
 }) => {
     const [errors, setErrors] = useState({});
+    const { role } = useContext(AuthContext);
     const [eventData, setEventData] = useState({
         title: '',
         className: '',
@@ -31,7 +33,7 @@ export const AddEvent =({
         }));
     }
 
-   return (
+   return ((role==="admin" || role==="user") &&
     <div id="add_event" className="modal custom-modal fade" role="dialog">
         <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">

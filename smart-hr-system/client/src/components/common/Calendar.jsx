@@ -57,7 +57,7 @@ export const Calendar = (props) => {
     }
 
 	
-        return (!loading &&
+        return (!loading && (role==="admin" || role==="user") &&
         
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           

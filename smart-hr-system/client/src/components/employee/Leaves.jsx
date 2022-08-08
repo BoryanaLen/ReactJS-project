@@ -1,10 +1,11 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../common/Header';
 import { SidebarEmployee } from './Sidebar';
 import { AddLeave } from '../common/Leaves/AddLeave';
 import * as leavesService  from "../../services/leavesService";
 import uuid from 'react-uuid'
+import { AuthContext } from '../../contexts/AuthContext';
 
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
@@ -15,6 +16,7 @@ export const Leaves = () => {
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false)
     const [leaves, setLeaves] = useState([]);
+    const { role } = useContext(AuthContext);
     const [selectedELeave, setSelectedLeave] = useState(null);
 
     useEffect(() => {
@@ -91,7 +93,7 @@ export const Leaves = () => {
         });
     }
 
-      return ( loading===false &&
+      return ( loading===false && role==="user" &&
         <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
             <Header onMenuClick={(value) => toggleMobileMenu()} />

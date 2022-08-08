@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { AuthContext } from '../../contexts/AuthContext';
  
 export const SidebarEmployee = (props) => {
 
     const [isSideMenu, setSideMenu] = useState("")
+    const { role } = useContext(AuthContext);
 
     const toggleSidebar = (value) => {
         setSideMenu(value);   
@@ -13,7 +15,7 @@ export const SidebarEmployee = (props) => {
     const location = useLocation();
     const pathname = location.pathname
 
-    return (
+    return (role==="user" &&
         <div className="sidebar" id="sidebar">
             <Scrollbars      
                     autoHide

@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {headerlogo} from '../../assets/imagepath'
-import { useContext } from "react";
 import {AuthContext } from '../../contexts/AuthContext';
 import {signOut} from 'firebase/auth'
 import * as requester from '../../services/requester'
@@ -11,6 +10,7 @@ import * as requester from '../../services/requester'
     
     const[userName, setUserName] = useState("");
     const { userLogout } = useContext(AuthContext);
+    const { role } = useContext(AuthContext);
 
     useEffect(() => {
 
@@ -42,24 +42,24 @@ import * as requester from '../../services/requester'
 
     let pathname = window.location.pathname
 
-      return (
+      return (role==="admin" || role==="user") &&
          <div className="header" style={{right:"0px"}}>
 
             <div className="header-left">
-            <Link to="/app/main/dashboard" className="logo">
-                <img src={headerlogo} width={40} height={40} alt="" />
-            </Link>
+                <Link to="/app/main/dashboard" className="logo">
+                    <img src={headerlogo} width={40} height={40} alt="" />
+                </Link>
             </div>
 
             <div id="toggle_btn" style={{display: pathname.includes('tasks') ?"none" :pathname.includes('compose') ? "none" :""}}onClick={handlesidebar}>
-            <span className="bar-icon"><span />
-                <span />
-                <span />
-            </span>
+                <span className="bar-icon"><span />
+                    <span />
+                    <span />
+                </span>
             </div>
 
             <div className="page-title-box">
-            <h3>Smart Hr System</h3>
+                <h3>Smart Hr System</h3>
             </div>
 
             <div id="mobile_btn" className="mobile_btn" onClick={() => onMenuClik()}><i className="fa fa-bars" /></div>
@@ -86,5 +86,4 @@ import * as requester from '../../services/requester'
             </div>
             </div>
         </div>       
-      );
    }
