@@ -1,10 +1,12 @@
-import React,  {useState} from 'react'
+import React,  {useState, useContext} from 'react'
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {headerlogo,lnEnglish,lnFrench,lnSpanish,lnGerman,Avatar_21} from '../../assets/imagepath'
+import { AuthContext } from '../../contexts/AuthContext';
 
   export const Header = (props) => {
 
+    const { role } = useContext(AuthContext);
     const handlesidebar=()=>{
       document.body.classList.toggle('mini-sidebar');
     }
@@ -14,7 +16,7 @@ import {headerlogo,lnEnglish,lnFrench,lnSpanish,lnGerman,Avatar_21} from '../../
 
     let pathname = window.location.pathname
 
-      return (
+      return (role==="admin" &&
          <div className="header" style={{right:"0px"}}>
         {/* Logo */}
         <div className="header-left">

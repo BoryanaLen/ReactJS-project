@@ -1,14 +1,16 @@
 
-import {useEffect,useState } from 'react';
+import {useEffect,useState, useContext } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import  Tableavatar from "../common/Tableavatar"
 import { Header } from '../common/Header'
 import { SidebarAdmin } from '../admin/SidebarAdmin'
+import { AuthContext } from '../../contexts/AuthContext';
 
 export const AttendanceAdmin = () => {
    
   const [menu, setMenu] = useState(false)
+  const { role } = useContext(AuthContext);
 
 	const toggleMobileMenu = () => {
 		setMenu(!menu)
@@ -22,7 +24,7 @@ export const AttendanceAdmin = () => {
     //   });
     // }
   });  
-      return (      
+      return ( role==="admin" &&       
    <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
         <Header onMenuClick={(value) => toggleMobileMenu()} />

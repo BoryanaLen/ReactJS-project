@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import * as eventsService from '../../services/eventsService'
 import FullCalendar from '@fullcalendar/react'
@@ -10,6 +10,7 @@ import { Header } from '../common/Header'
 import { SidebarEmployee } from '../employee/Sidebar'
 import { AddEvent } from '../common/events/AddEvent'
 import { SidebarAdmin } from '../admin/SidebarAdmin';
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 export const Calendar = (props) => {
@@ -19,6 +20,7 @@ export const Calendar = (props) => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState([]);
     const [iscurrentUserAdmin, setIsCurrentUserAdmin] = useState([]);
+    const { role } = useContext(AuthContext);
 
     const toggleMobileMenu = () => {
 		setMenu(!menu)
@@ -60,7 +62,7 @@ export const Calendar = (props) => {
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
             <Header onMenuClick={(value) => toggleMobileMenu()} />
-            {iscurrentUserAdmin?  <SidebarAdmin/> :  <SidebarEmployee/>}
+            {role==="admin"?  <SidebarAdmin/> :  <SidebarEmployee/>}
 
             <div className="page-wrapper">
                 <div className="content container-fluid">

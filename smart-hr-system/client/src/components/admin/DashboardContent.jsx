@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import {User,Avatar_19,Avatar_07,Avatar_06,Avatar_14} from '../../assets/imagepath.jsx'
+import { AuthContext } from '../../contexts/AuthContext';
  
 import {BarChart,Bar, ResponsiveContainer,
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -27,7 +28,10 @@ const linechartdata = [
 ];
 
 export const DashboardContent  = () => {
-    return (
+
+    const { role } = useContext(AuthContext);
+
+    return (role==="admin" &&
         <div className="content container-fluid">
         {/* Page Header */}
         <div className="page-header">

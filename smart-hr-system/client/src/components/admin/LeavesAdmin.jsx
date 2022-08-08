@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid'
 import * as leavesService  from "../../services/leavesService";
@@ -8,6 +8,7 @@ import { Table } from 'antd';
 import { Header } from '../common/Header'
 import { SidebarAdmin }from '../admin/SidebarAdmin'
 import { AddLeave }from '../common/Leaves/AddLeave'
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 export const LeaveAdmin = () => {
@@ -16,6 +17,7 @@ export const LeaveAdmin = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [currentLeave, setCurrentLeave] = useState({});
+    const { role } = useContext(AuthContext);
 
 	const toggleMobileMenu = () => {
 		setMenu(!menu)
@@ -142,7 +144,7 @@ export const LeaveAdmin = () => {
     },
     ]
 
-      return ( !loading &&       
+      return ( !loading &&  role==="admin" &&     
         <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
                 
                 <Header onMenuClick={(value) => toggleMobileMenu()} />
