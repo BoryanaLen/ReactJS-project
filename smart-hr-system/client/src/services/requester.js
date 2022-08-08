@@ -12,9 +12,10 @@ export const getUser = async () => {
 }
 
 export const isUserAdmin = async () => { 
-    const user = await getUser();   
-    return user.email==="admin@admin.com";
+    const role = localStorage.getItem('role');  
+    return role==="admin";
 }
+
 
 export const getAll = async (dataCollection) => { 
     const dbRef = collection(db, dataCollection);  

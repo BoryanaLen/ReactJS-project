@@ -2,16 +2,20 @@ import * as requester from "./requester";
 
 const dataCollection = 'users';
 
+export const getUser = async () => {   
+    return  await requester.getUser();
+}
+
+export const isUserAdmin = async () => {   
+    return  await requester.isUserAdmin();
+}
+
 export const getAllUsers = async () => {   
-    return  requester.getAll(dataCollection);
+    return await requester.getAll(dataCollection);
 }
 
 export const addUser = async (user) => {
     return await requester.addDocument(user, dataCollection);
-}
-
-export const getUser = async (userId) => { 
-    return await requester.getDocument(userId, dataCollection);
 }
 
 export const updateUser = async (userId, updatedValue) => { 

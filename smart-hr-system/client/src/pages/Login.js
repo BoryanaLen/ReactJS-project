@@ -15,8 +15,9 @@ import * as usersService from '../services/usersService'
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('') 
     const [error, setError] = useState('')
-    const { userLogin } = useContext(AuthContext);
-    const navigate = useNavigate()
+    const { userLogin} = useContext(AuthContext);
+    const navigate = useNavigate();
+    
 
   const onSubmit = e => {
     e.preventDefault()
@@ -24,16 +25,15 @@ import * as usersService from '../services/usersService'
     .then(authData => {
         usersService.getAllUsers()
         .then( data => {
-            const role = data.map(x => x.data()).find(x => x.userId===authData.user.uid).role
-            authData.user.role = role;
+            const roleData = data.map(x => x.data()).find(x => x.userId===authData.user.uid).role
+            userLogin(authData, roleData);
+            if (roleData === 'admin'){
+                navigate('/admin/dashboard')
+            }
+            else{
+                navigate('employee/dashboard')
+            }
         })
-        userLogin(authData);
-        if (email === "admin@admin.com"){
-          navigate('/admin/dashboard')
-        }
-        else{
-          navigate('employee/dashboard')
-        }
     })
     .catch(err => setError(err.message))
   }

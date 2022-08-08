@@ -5,14 +5,17 @@ export const AuthContext = React.createContext()
 
 export function AuthProvider({children, value}) {
     const [auth, setAuth] = useLocalStorage('auth', {});
+    const [role, setRole] = useLocalStorage('role', '')
 
-    const userLogin = (authData) => {
+    const userLogin = (authData, role) => {
         setAuth(authData);
+        setRole(role)
     };
 
     const userLogout = () => {
         console.log("logout")
-        setAuth({});       
+        setAuth({}); 
+        setRole('');     
     };
 
   return (
@@ -20,7 +23,8 @@ export function AuthProvider({children, value}) {
         user: auth,
         userLogin,
         userLogout,
-        isAuthenticated: !!auth.accessToken
+        isAuthenticated: !!auth.accessToken,
+        role
     }}>
       {children}
     </AuthContext.Provider>
