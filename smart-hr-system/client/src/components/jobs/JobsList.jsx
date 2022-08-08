@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { headerlogo } from '../../assets/imagepath'
-import { JobDetails } from './JobDetails'
 import * as jobsService from '../../services/jobsService'
 
 export const JobsList = () => {
