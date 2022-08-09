@@ -1,62 +1,40 @@
 import { useState, useEffect } from 'react';
+import { storage } from '../../services/firebase'
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
 import * as candidatesService from '../../services/candidatesService';
 
 export const ApplyJob = ({
     onJobApply
    }) => {
-
-    const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
     const [ file, setFile ] = useState();
-    const [candidateData, setCandidateData] = useState({
-        name: '',
-        email: '',
-        message: '',
-        cv_upload: ''
-    });
-
-    // useEffect(() => {
-    //     setLoading(true)
-       
-    //         .finally(() => setLoading(false))
-    // }, [])
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const file = e.target[0]?.files[0]
-
-        const res =candidatesService.uploadDocument(file);
-        console.log(res)
-    }
-    
-
-    const changeFileHandler = (e) => {
-        setCandidateData(state => ({
-            ...state,
-            [e.target.name]: e.target.files[0]
-        }));
-        console.log(candidateData)
-    };
-
-    const changeHandler = (e) => {
-        setCandidateData(state => ({
-            ...state,
-            [e.target.name]: e.target.value
-        }));
-    };
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(e)
-        console.log(candidateData.cv)
-        candidatesService
-        .uploadDocument(candidateData.cv)
-        .then( data => 
-            console.log(data)
-        )
 
-        //onJobApply(candidateData); 
+        const candidateData = Object.fromEntries(new FormData(e.target));
+
+        if (!file) {
+            alert("Please upload an image first!");
+        }
+
+        const storageRef = ref(storage, `files/${file.name}`)
+        uploadBytes(storageRef, file)
+        .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+                .then(downloadURL => {
+                    console.log(downloadURL)
+                    candidateData.cv  = downloadURL
+                })    
+        })
+        onJobApply(candidateData); 
     };
+
+    function handleChange(event) {
+        console.log(event.target)
+        const file = event.target.files[0]
+        console.log(file)
+        setFile(event.target.files[0]);
+    }
 
     return ( 
         <div className="modal custom-modal fade" id="apply_job" role="dialog">
@@ -72,20 +50,20 @@ export const ApplyJob = ({
                 <form onSubmit={submitHandler}>
                 <div className="form-group">
                   <label>Name</label>
-                  <input className="form-control" type="text" />
+                  <input className="form-control" type="text" name='name'/>
                 </div>
                 <div className="form-group">
                   <label>Email Address</label>
-                  <input className="form-control" type="text" />
+                  <input className="form-control" type="text" name='email'/>
                 </div>
                 <div className="form-group">
                   <label>Message</label>
-                  <textarea className="form-control" defaultValue={""} />
+                  <textarea className="form-control" defaultValue={""} name='message'/>
                 </div>
                 <div className="form-group">
                   <label>Upload your CV</label>
                   <div className="custom-file">
-                    <input type="file" className="custom-file-input" id="cv_upload" />
+                    <input type="file" className="custom-file-input" id="cv_upload" onChange={handleChange} />
                     <label className="custom-file-label" htmlFor="cv_upload">Choose file</label>
                   </div>
                 </div>

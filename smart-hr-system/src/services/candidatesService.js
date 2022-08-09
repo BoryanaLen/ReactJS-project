@@ -27,9 +27,3 @@ export const updateCandidate = async (candidateId, updatedValue) => {
 export const deleteCandidate = async (candidateId) => { 
     return await requester.deleteDocument(candidateId, dataCollection);
 } 
-
-export const uploadDocument = async (file) => { 
-    const result = await requester.uploadFile(file);
-    console.log(result)
-    return result
-} 
