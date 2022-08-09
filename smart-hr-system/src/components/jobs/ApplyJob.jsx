@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { storage } from '../../services/firebase'
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
-import * as candidatesService from '../../services/candidatesService';
 
 export const ApplyJob = ({
     onJobApply
@@ -30,9 +29,6 @@ export const ApplyJob = ({
     };
 
     function handleChange(event) {
-        console.log(event.target)
-        const file = event.target.files[0]
-        console.log(file)
         setFile(event.target.files[0]);
     }
 
@@ -68,7 +64,7 @@ export const ApplyJob = ({
                   </div>
                 </div>
                 <div className="submit-section">
-                  <button className="btn btn-primary submit-btn">Submit</button>
+                  <button className="btn btn-primary submit-btn" data-bs-dismiss="modal" >Submit</button>
                 </div>
               </form>
                 </div>

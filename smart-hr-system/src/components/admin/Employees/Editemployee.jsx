@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useContext } from "react";
 import { AuthContext } from '../../../contexts/AuthContext';
+import { storage } from '../../../services/firebase'
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
   
   export const Editemployee = ({
     employeeData,
@@ -10,10 +12,32 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
     const [values, setValues] = useState({...employeeData});
     const { role } = useContext(AuthContext);
+    const [ file, setFile ] = useState();
+    const [ url, setUrl ] = useState();
 
     const submitHandler = (e) => {
         e.preventDefault();
-        onEmployeeEdit(values); 
+
+        if (!file) {
+            alert("Please upload an image first!");
+        }
+
+        const metadata = {
+            contentType: 'image/jpeg',
+        };
+
+        console.log(file)
+        const storageRef = ref(storage, `images/${file.name}`)
+        uploadBytes(storageRef, file, metadata)
+        .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+                .then(downloadURL => {
+                    setUrl(downloadURL)
+                    onEmployeeEdit(values, downloadURL); 
+                })    
+        })
+
+        console.log(url)
     };
 
     const changeHandler = (e) => {
@@ -22,6 +46,10 @@ import { AuthContext } from '../../../contexts/AuthContext';
             [e.target.name]: e.target.value
         }));
     };
+
+    function handleChange(event) {
+        setFile(event.target.files[0]);
+    }
     
     return ( role==="admin" &&
       <div id="edit_employee" className="modal custom-modal fade" role="dialog">
@@ -94,6 +122,13 @@ import { AuthContext } from '../../../contexts/AuthContext';
                         </select>
                        </div>
                      </div>
+                     <div className="form-group">
+                         <label>Upload photo</label>
+                         <div className="custom-file">
+                            <input type="file" className="custom-file-input" id="cv_upload" onChange={handleChange} />
+                            <label className="custom-file-label" htmlFor="cv_upload">Choose file</label>
+                         </div>
+                      </div>
                    </div>
                 <div className="submit-section">
                   <button className="btn btn-primary submit-btn" data-bs-dismiss="modal" >Save</button>

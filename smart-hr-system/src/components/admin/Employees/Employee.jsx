@@ -12,7 +12,7 @@ export const Employee = ({
         <div  >     
             <div className="profile-widget">
                 <div className="profile-img">
-                <Link to="/app/profile/employee-profile" className="avatar"><img src={Avatar_02} alt="" /></Link>
+                <Link to="/app/profile/employee-profile" className="avatar"><img src={employee.data.photoUrl} alt="" /></Link>
                 </div>
                 <div className="dropdown profile-action">
                 <button className="action-icon dropdown-toggle employee-view-more" data-bs-toggle="dropdown" aria-expanded="true" ><i className="material-icons" onClick={() => onSetCurrentEmployeeClick(employee)}>more_vert</i></button>

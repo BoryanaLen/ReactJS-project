@@ -7,7 +7,7 @@ export const getAllEmployees = async () => {
 }
 
 export const addEmployee = async (employeeData) => {
-    return await requester.addDocument(employeeData, dataCollection);
+    return await requester.addDocument(employeeData, dataCollection, false);
 }
 
 export const getEmployee = async (employeeId) => { 

@@ -1,12 +1,15 @@
-  import { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { storage } from '../../../services/firebase'
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
 
   export const Addemployee = ({
     onEmployeeCreate
    }) => {
 
     const { role } = useContext(AuthContext);
-
+    const [ file, setFile ] = useState();
+    const [ url, setUrl ] = useState();
     const [errors, setErrors] = useState({});
     const [employeeData, setEmployeeData] = useState({
         firstName: '',
@@ -26,18 +29,41 @@ import { AuthContext } from '../../../contexts/AuthContext';
         }));
     };
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        console.log(employeeData);
-        onEmployeeCreate(employeeData); 
-    };
-
-
     const minLength = (e, bound) => {
         setErrors(state => ({
             ...state,
             [e.target.name]: employeeData[e.target.name].length < bound,
         }));
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        if (!file) {
+            alert("Please upload an image first!");
+        }
+
+        const metadata = {
+            contentType: 'image/jpeg',
+        };
+
+        console.log(file)
+        const storageRef = ref(storage, `images/${file.name}`)
+        uploadBytes(storageRef, file, metadata)
+        .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+                .then(downloadURL => {
+                    setUrl(downloadURL)
+                    onEmployeeCreate(employeeData, downloadURL); 
+                })    
+        })
+
+        console.log(url)
+       
+    };
+
+    function handleChange(event) {
+        setFile(event.target.files[0]);
     }
     
     return ( role==="admin" && 
@@ -117,6 +143,13 @@ import { AuthContext } from '../../../contexts/AuthContext';
                        </div>
                      </div>
                    </div>
+                   <div className="form-group">
+                    <label>Upload photo</label>
+                    <div className="custom-file">
+                    <input type="file" className="custom-file-input" id="cv_upload" onChange={handleChange} />
+                    <label className="custom-file-label" htmlFor="cv_upload">Choose file</label>
+                  </div>
+                </div>
                    <div className="submit-section">
                      <button className="btn btn-primary submit-btn" data-bs-dismiss="modal" aria-label="Close">Submit</button>
                    </div>

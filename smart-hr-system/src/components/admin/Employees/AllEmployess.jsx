@@ -43,7 +43,8 @@ export const AllEmployees = () => {
        console.log('set employee current')
     }
 
-    function employeeCreateHandler (employeeData) {
+    function employeeCreateHandler (employeeData, url) {
+        employeeData.photoUrl = url;
         employeeService
         .addEmployee(employeeData)
         .then(doc => {
@@ -66,7 +67,9 @@ export const AllEmployees = () => {
         });
     }
 
-    function employeeUpdateHandler(updatedData){
+    function employeeUpdateHandler(updatedData, url){
+        updatedData.photoUrl = url;
+        console.log(updatedData)
         employeeService
         .updateEmployee(selectedEmployee.id, updatedData)
         .then(employee => {
