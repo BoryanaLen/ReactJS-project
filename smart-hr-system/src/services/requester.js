@@ -1,7 +1,8 @@
 import { app, storage } from './firebase'
 import { getFirestore } from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage"
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
 import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { coins } from 'fontawesome';
 
 const db = getFirestore(app);
 
@@ -64,16 +65,5 @@ export const deleteDocument = async (docId, dataCollection) => {
 }
 
 
-    export const uploadFile = (file) => {
-        if (!file) return null;
-        const storageRef = ref(storage, `files/${file.name}`)
-        uploadBytes(storageRef, file)
-        .then((snapshot) => {
-        const url =getDownloadURL(snapshot.ref).then((downloadURL) => {
-            console.log(downloadURL)
-        })
-        console.log(url)
-        return url;
-     })
-    }
+
 
