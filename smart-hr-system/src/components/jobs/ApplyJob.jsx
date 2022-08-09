@@ -7,6 +7,7 @@ export const ApplyJob = ({
     onJobApply
    }) => {
     const [ file, setFile ] = useState();
+    const [ url, setUrl ] = useState();
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -22,11 +23,10 @@ export const ApplyJob = ({
         .then((snapshot) => {
             getDownloadURL(snapshot.ref)
                 .then(downloadURL => {
-                    console.log(downloadURL)
-                    candidateData.cv  = downloadURL
+                    setUrl(downloadURL)
                 })    
         })
-        onJobApply(candidateData); 
+        onJobApply(candidateData, url); 
     };
 
     function handleChange(event) {

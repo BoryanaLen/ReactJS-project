@@ -1,43 +1,23 @@
-import { useState,useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import { headerlogo } from '../../assets/imagepath'
 import { ApplyJob } from "./ApplyJob";
 import * as candidatesService from '../../services/candidatesService'
 
-export const JobDetails = ({
-    jobData
-}) => {
-
-    const [loading, setLoading] = useState(false);
-    const [candidates, setCandidates] = useState(null);
+export const JobDetails = () => {
     
     const location = useLocation()
     const jobstate  = location.state;
     const job = jobstate.job;
     console.log(job)
 
-    useEffect(() => {
-        setLoading(true)
-    }, [])
-
-
-    // useEffect(() => {
-    //     setLoading(true)
-    //     candidatesService
-    //         .getAllCandidates()
-    //         .then((data) => {
-    //             const list = data.map(c => {
-    //                 return { id: c.id, data: c.data() };
-    //             })
-    //             setCandidates(list)
-    //         })
-    //         .finally(() => setLoading(false))
-    // }, [])
-    function applyJobHandler (candidateData) {
+    function applyJobHandler (candidateData, url) {
+        candidateData.jobId = job.id
+        candidateData.cvUrl = url
+        console.log(candidateData)
         candidatesService
-        .addCandidate(candidateData)
+        .addCandidate(candidateData, true)
         .then(doc => {
-            setCandidates(oldCandidates => [...oldCandidates, {id: doc.id, data: candidateData}]);
+            console.log('candidate sdded')
         })
         .catch(err => {
             console.log(err);

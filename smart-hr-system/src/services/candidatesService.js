@@ -11,8 +11,8 @@ export const getAllCandidatesForUser = async () => {
    return list;
 }
 
-export const addCandidate = async (candidateData) => {
-    return await requester.addDocument(candidateData, dataCollection);
+export const addCandidate = async (candidateData, withoutAuth = false) => {
+    return await requester.addDocument(candidateData, dataCollection, withoutAuth);
 }
 
 export const getCandidate = async (candidateId) => { 

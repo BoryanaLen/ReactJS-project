@@ -32,9 +32,12 @@ export const getDocumentsByUserId = async (dataCollection) => {
     return list;
 }
 
-export const addDocument = async (data, dataCollection) => {
-    const user = await getUser();
-    data.uid = user.uid;
+export const addDocument = async (data, dataCollection, withoutAuth = false) => {
+    if(!withoutAuth){
+        const user = await getUser();
+        data.uid = user.uid;
+    }
+
     console.log(data);
     const dbRef = collection(db, dataCollection); 
     const doc = await addDoc(dbRef, data);
