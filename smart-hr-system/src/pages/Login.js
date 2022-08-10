@@ -66,11 +66,6 @@ export const  Login = (props) => {
                        </div>
                      </div>             
                    </div>
-                   {/* <div className="col-auto">
-                         <Link className="text-muted" to="/forgotpassword">
-                           Forgot password?
-                         </Link>
-                       </div> */}
                    <div className="form-group text-center">
                    <button className="btn btn-primary account-btn" type="submit" > Login </button>                    
                    </div>

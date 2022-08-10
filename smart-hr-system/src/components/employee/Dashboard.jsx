@@ -110,7 +110,7 @@ export const EmployeeDashboard = () => {
                     </div>
                     </div>
                     <div className="card-footer">
-                    <Link to = "/app/employees/clients">View all clients</Link>
+                    <Link to = "/app/employees/clients">View all events</Link>
                     </div>
                 </div>
                     </div>

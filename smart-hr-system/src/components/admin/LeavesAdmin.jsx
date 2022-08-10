@@ -2,6 +2,7 @@ import React, { useState,useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid'
 import * as leavesService  from "../../services/leavesService";
+import * as employeeService  from "../../services/employeeService";
 import 'antd/dist/antd.css';
 import "../../assets/css/antdstyle.css";
 import { Table } from 'antd';
@@ -14,6 +15,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 export const LeaveAdmin = () => {
 
     const [menu, setMenu] = useState(false);
+    const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [currentLeave, setCurrentLeave] = useState({});
@@ -35,6 +37,15 @@ export const LeaveAdmin = () => {
                 console.log(list);
             })
             .finally(() => setLoading(false))
+        employeeService
+        .getAllEmployees()
+        .then((data) => {
+            const list = data.map(empl => {
+                return { id: empl.id, data: empl.data() };
+            })
+            setEmployees(list)
+        })
+        .finally(() => setLoading(false))
     }, [])
 
     function leaveCreateHandler (leaveData) {
@@ -89,8 +100,7 @@ export const LeaveAdmin = () => {
         dataIndex: 'name',
         render: (text, record) => (            
             <h2 className="table-avatar">
-            <Link to="/app/profile/employee-profile" className="avatar"><img alt="" src={record.image} /></Link>
-            <Link to="/app/profile/employee-profile">{text} <span>{record.role}</span></Link>
+            <Link to="/app/profile/employee-profile" className="avatar"><img alt="" src={record.userIdl} /></Link>
             </h2>
         ), 
         sorter: (a, b) => a.name.length - b.name.length,
