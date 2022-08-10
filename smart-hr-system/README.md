@@ -1,3 +1,32 @@
+Smart Hr System
+This is a training project for ReactJS course in SoftUni academy, started in June 2022.
+
+Overview
+Smart Hr system is a platform for managing emploees data. It conatins admin and employee views. 
+To login as admin use:
+email: admin@admin.com,
+password: 123456
+
+Admin 
+- Dashboard,
+- View all employees. Also add edit and delete employee,
+- Add events,
+- View and approve leaves,
+
+Employee:
+- Dashboard,
+- Vew leaves and add new,
+- Add events
+
+Not registered users:
+- View job offers,
+- Apply for a job
+
+Techniques used
+React for building the user interface.
+Firebase for the backend, user management, cloud data storage, and hosting.
+React Testing Library for making unit tests.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
