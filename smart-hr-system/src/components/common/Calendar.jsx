@@ -62,7 +62,7 @@ export const Calendar = (props) => {
             <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
           
             <Header onMenuClick={(value) => toggleMobileMenu()} />
-            {role==="admin"?  <SidebarAdmin/> :  <SidebarEmployee/>}
+            {iscurrentUserAdmin?  <SidebarAdmin/> :  <SidebarEmployee/>}
 
             <div className="page-wrapper">
                 <div className="content container-fluid">

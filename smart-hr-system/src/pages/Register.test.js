@@ -4,9 +4,10 @@ import { Register } from './Register';
 import { AuthContext } from '../contexts/AuthContext';
 import { BrowserRouter } from 'react-router-dom'
 
-test('login page renders correctly', async () => {
+test('register page renders correctly', async () => {
     render(
-     <AuthContext.Provider value={{ userLogin: jest.fn() }}>
+     <AuthContext.Provider value={{ userLogin:
+        { user: { email: 'test@test.com'}} }}>
          <BrowserRouter>
             <Register/>
          </BrowserRouter> 

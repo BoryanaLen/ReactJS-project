@@ -24,7 +24,7 @@ import { AllEmployees } from './components/admin/Employees/AllEmployess';
 import { AdminDashboard } from './components/admin/Dashboard';
 import { EmployeeDashboard } from './components/employee/Dashboard';
 import { Leaves } from './components/employee/Leaves';
-import { Delete } from './components/common/Leaves/DeleteLeave';
+import { DeleteLeave } from './components/common/Leaves/DeleteLeave';
 import { AttendanceAdmin } from './components/admin/AttendanceAdmin';
 import { LeaveAdmin } from './components/admin/LeavesAdmin';
 import { Calendar } from './components/common/Calendar';
@@ -32,6 +32,7 @@ import { Profile } from './components/common/Profile';
 import { JobsList} from './components/jobs/JobsList';
 import { ManagedJobs } from './components/jobs/ManagedJobs';
 import { JobDetails } from './components/jobs/JobDetails';
+import { EditLeave } from './components/common/Leaves/EditLeave';
 
 function App() {
     
@@ -66,7 +67,8 @@ function App() {
                 <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
                 <Route path="/employee/leaves" element={< Leaves />} />
                 <Route path="/employee/calendar" element={< Calendar />} />
-                <Route path='/employee/leave/delete' element={<Delete/>} />
+                <Route path='/employee/leave/edit' element={<EditLeave/>} />
+                <Route path='/employee/leave/delete' element={<DeleteLeave/>} />
                
             </Routes>  
         </div>

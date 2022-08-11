@@ -16,7 +16,6 @@ export const Leaves = () => {
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false)
     const [leaves, setLeaves] = useState([]);   
-    const [selectedELeave, setSelectedLeave] = useState(null);
     const { user} = useContext(AuthContext);
     const { role } = useContext(AuthContext);
 
@@ -31,10 +30,6 @@ export const Leaves = () => {
             .finally(() => setLoading(false))
     }, [])
 
-    function onSetCurrentLeaveClick (eventData){
-
-    }
-      
     const columns = [
     {
         title: 'Leave Type',

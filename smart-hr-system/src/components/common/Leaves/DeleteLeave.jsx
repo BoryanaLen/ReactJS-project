@@ -1,9 +1,8 @@
 import React from 'react';
 
-export const Delete = () => {
+export const DeleteLeave = () => {
     
     return ( 
-  <>
       <div className="modal custom-modal fade" id="delete_approve" role="dialog">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -26,5 +25,4 @@ export const Delete = () => {
           </div>
         </div>
       </div>
-</>
 )}
