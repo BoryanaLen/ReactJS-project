@@ -19,7 +19,7 @@ logged in user
 - View onw calendar and create events
 
 administrator - to log in as administrator use: email: admin@admin.com, password: 123456
-- anage employees data
+- Manage employees data
 - View and approve leaves
 - View onw calendar and create events
 - Manage job offfers
@@ -29,3 +29,9 @@ administrator - to log in as administrator use: email: admin@admin.com, password
 - React for building the user interface.
 - Firebase for the backend, user management, cloud data storage, and hosting.
 - Jest for making unit tests.
+
+# Client-side usage(PORT: 3000)
+$ npm i       // npm install packages
+$ npm start   // run it locally
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in the browser.
