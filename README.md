@@ -31,7 +31,7 @@ administrator - to log in as administrator use: email: admin@admin.com, password
 - Jest for making unit tests.
 
 # Client-side usage(PORT: 3000)
-$ npm i       // npm install packages
-$ npm start   // run it locally
+  $ npm i       // npm install packages
+  $ npm start   // run it locally
 Runs the app in the development mode.
 Open http://localhost:3000 to view it in the browser.
