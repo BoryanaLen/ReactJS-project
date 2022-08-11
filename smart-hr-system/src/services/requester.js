@@ -1,14 +1,13 @@
-import { app, storage } from './firebase'
+import { app } from './firebase'
 import { getFirestore } from 'firebase/firestore';
-import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
 import { collection, doc, addDoc, getDocs, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
-import { coins } from 'fontawesome';
 
 const db = getFirestore(app);
 
 export const getUser = async () => {   
     const user = localStorage.getItem('auth');
     const auth = JSON.parse(user || '{}'); 
+    console.log(auth.user)
     return auth.user;
 }
 

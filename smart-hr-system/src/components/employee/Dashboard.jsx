@@ -6,12 +6,15 @@ import { SidebarEmployee } from './Sidebar';
 import * as requester from '../../services/requester'
 import * as eventsService from '../../services/eventsService'
 import * as leavesService from '../../services/leavesService'
+import * as employeeService from '../../services/employeeService'
 import { AuthContext } from '../../contexts/AuthContext';
+import { DeleteLeave } from '../common/Leaves/DeleteLeave';
 
 export const EmployeeDashboard = () => {
 
     const [menu, setMenu] = useState(false)
-    const [userName, setUserName] = useState("");
+    const [user, setUser] = useState("");
+    const [employee, setEmployee] = useState("");
     const [events, setEvents] = useState([]);
     const [leaves, setLeaves] = useState([]);
     const [loading, setLoading] = useState([]);
@@ -24,22 +27,29 @@ export const EmployeeDashboard = () => {
         async function getData() {
             requester.getUser()
             .then(user => {
-                setUserName(user.email)
+                setUser(user)
+                console.log(user)
             })
         }     
         getData();
 
+        employeeService
+        .getCurrentEmployee()
+        .then((data) => {
+            setEmployee(data);
+            console.log(data)
+        })
+
         setLoading(true)
         eventsService
-            .getAllEventsForUser()
-            .then((data) => {
-                const list = data.map(leave => {
-                    return { id: leave.id, data: leave.data() };
-                })
-                setEvents(list);
-                console.log(list)
+        .getAllEventsForUser()
+        .then((data) => {
+            const list = data.map(event => {
+                return { id: event.id, data: event.data() };
             })
-            .finally(() => setLoading(false))
+            setEvents(list);
+            console.log(list)
+        })
 
         leavesService
         .getAllLeavesForUser()
@@ -62,178 +72,159 @@ export const EmployeeDashboard = () => {
 		setMenu(!menu)
 	}
 
-      return ( role==="user" && !loading &&
+    return ( role==="user" && !loading &&
+    <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
+      
+        <Header onMenuClick={(value) => toggleMobileMenu()} />
+        <SidebarEmployee /> 
 
-        <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
-          
-          <Header onMenuClick={(value) => toggleMobileMenu()} />
-          <SidebarEmployee /> 
-            <div className="page-wrapper"> 
-                {/* Page Content */}
-                <div className="content container-fluid">
+        <div className="page-wrapper"> 
+            <div className="content container-fluid">
+            
+            <div className="row">
+                <div className="col-md-12">
+                  <div className="welcome-box">
+                    <div className="welcome-img">
+                      <img alt="" src={employee.photoUrl} />
+                    </div>
+                    <div className="welcome-det">
+                      <h3>Welcome, {user.email}</h3>
+                      <p>{date}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 <div className="row">
-                    <div className="col-md-12">
-                    <div className="welcome-box">
-                        <div className="welcome-img">
-                        <img alt="" src={Avatar_02} />
+                    <div className="col-md-6 d-flex">
+                        <div className="card card-table flex-fill">
+                        <div className="card-header">
+                            <h3 className="card-title mb-0">Events</h3>
                         </div>
-                        <div className="welcome-det">
-                        <h3>Welcome, {userName}</h3>
-                        <p>{date}</p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+                        <div className="card-body">
+                            <div className="table-responsive">
+                            <table className="table table-nowrap custom-table mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                <div className="row">
-                <div className="col-lg-4 col-md-4">
-                    <div className="dash-sidebar">
-                        <section>
-                        <h5 className="dash-title">Your Leave</h5>
-                        <div className="card">
-                            <div className="card-body">
-                            <div className="time-list">
-                                <div className="dash-stats-list">
-                                <h4>4.5</h4>
-                                <p>Leave Taken</p>
-                                </div>
-                                <div className="dash-stats-list">
-                                <h4>12</h4>
-                                <p>Remaining</p>
-                                </div>
-                            </div>
-                            <div className="request-btn">
-                                <a className="btn btn-primary" href="#">Apply Leave</a>
-                            </div>
+                                    { events && events.map((event, index) => (
+                                            <tr key={index}>
+                                                <td>{event.data.title}</td>
+                                                <td>{event.data.start}</td>
+                                                <td>{event.data.className}</td>
+                                            </tr>
+                                    ))}
+
+                                </tbody>
+                            </table>
                             </div>
                         </div>
-                        </section>
-                        <section>
-                        <h5 className="dash-title">Your Events</h5>
-                        <div className="card">
-                            <div className="card-body">
-                            <div className="time-list">
-                                <div className="dash-stats-list">
-                                <h4>5.0 Hours</h4>
-                                <p>Approved</p>
-                                </div>
-                                <div className="dash-stats-list">
-                                <h4>15 Hours</h4>
-                                <p>Remaining</p>
-                                </div>
-                            </div>
-                            <div className="request-btn">
-                                <a className="btn btn-primary" href="#">Apply Event</a>
-                            </div>
-                            </div>
+                        <div className="card-footer">
+                            <Link to = "/employee/calendar">View all events</Link>
                         </div>
-                        </section>
+                        </div>
                     </div>
-                    </div>
-
-                    <div className="col-lg-12 col-md-8">
-                    <div className="card card-table flex-fill">
-                    <div className="card-header">
-                    <h3 className="card-title mb-0">Events</h3>
-                    </div>
-                    <div className="card-body">
-                    <div className="table-responsive">
-                        <table className="table custom-table mb-0">
-                        <thead>
-                            <tr>
-                            <th>Title</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th className="text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            { events &&
-                                events.slice(0, 5).map((event, index) => (
+                    <div className="col-md-6 d-flex">
+                        <div className="card card-table flex-fill">
+                        <div className="card-header">
+                            <h3 className="card-title mb-0">Leaves</h3>
+                        </div>
+                        <div className="card-body">
+                            <div className="table-responsive">	
+                            <table className="table custom-table table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>No Of Days</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                { leaves && leaves.map((leave, index) => (
                                     <tr key={index}>
-                                    <td>{event.data.title}</td>
-                                    <td>{event.data.start}</td>
-                                    <td>{event.data.className}</td>
-                                    <td className="text-end">
-                                    <div className="dropdown dropdown-action">
-                                        <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i className="material-icons">more_vert</i></a>
-                                        <div className="dropdown-menu dropdown-menu-right">
-                                        <Link className="dropdown-item" to="/employee/leave/edit" state={{event}}> <i className="fa fa-pencil m-r-5" />Edit</Link>
-                                        <Link className="dropdown-item" to="/employee/leave/delete"> <i className="fa fa-trash-o m-r-5" />Delete</Link>
-                                        </div>
-                                    </div>
-                                    </td>
-                                </tr>                 
-                            ))}            
-
-                        </tbody>
-                        </table>
-                    </div>
-                    </div>
-                    <div className="card-footer">
-                    <Link to = "/app/employees/clients">View all events</Link>
+                                        <td>{leave.data.leaveType}</td>
+                                        <td>{leave.data.from}</td>
+                                        <td>{leave.data.to}</td>
+                                        <td>{leave.data.leaveType}</td>
+                                        <td>{leave.data.leaveType}</td>
+                                    </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        <div className="card-footer">
+                            <Link to = "/employee/leaves">View all leaves</Link>
+                        </div>
+                        </div>
                     </div>
                 </div>
-                    </div>
-
-                    <div className="col-lg-12 col-md-8">
-                    <div className="card card-table flex-fill">
-                    <div className="card-header">
-                    <h3 className="card-title mb-0">Leaves</h3>
-                    </div>
-                    <div className="card-body">
-                    <div className="table-responsive">
-                        <table className="table custom-table mb-0">
-                        <thead>
-                            <tr>
-                            <th>Leave type</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>No of days</th>
-                            <th>Reason</th>
-                            <th>Status</th>
-                            <th className="text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            
-                        { leaves &&
-                                leaves.slice(0, 5).map((leave, index) => (
-                                    <tr key={index}>
-                                    <td>{leave.data.leaveType}</td>
-                                    <td>{leave.data.from}</td>
-                                    <td>{leave.data.to}</td>
-                                    <td>{leave.data.numberOfDays}</td>
-                                    <td>{leave.data.leaveReason}</td>
-                                    <td>{leave.data.status}</td>
-                                    <td className="text-end">
-                                    <div className="dropdown dropdown-action">
-                                        <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i className="material-icons">more_vert</i></a>
-                                        <div className="dropdown-menu dropdown-menu-right">
-                                        <Link className="dropdown-item" to="/employee/leave/edit" state={{leave}}> <i className="fa fa-pencil m-r-5" />Edit</Link>
-                                        <Link className="dropdown-item" to="/employee/leave/delete"> <i className="fa fa-trash-o m-r-5" />Delete</Link>
-                                        </div>
-                                    </div>
-                                    </td>
-                                </tr>                 
-                            ))}             
-
-                        </tbody>
-                        </table>
-                    </div>
-                    </div>
-                    <div className="card-footer">
-                    <Link to="/employee/leaves">View all leaves</Link>
-                    </div>
-                </div>
-                    </div>
-
-                </div>
-                </div>
-                {/* /Page Content */}
             </div>
-        </div> 
-      );
+
+            {/* Edit Leave Modal */}
+      <div id="edit_leave" className="modal custom-modal fade" role="dialog">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Edit Leave</h5>
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">x</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="form-group">
+                  <label>Leave Type <span className="text-danger">*</span></label>
+                  <select className="select">
+                    <option>Select Leave Type</option>
+                    <option>Casual Leave 12 Days</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>From <span className="text-danger">*</span></label>
+                  <div>
+                    <input className="form-control datetimepicker" defaultValue="01-01-2019" type="date" />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>To <span className="text-danger">*</span></label>
+                  <div>
+                    <input className="form-control datetimepicker" defaultValue="01-01-2019" type="date" />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>Number of days <span className="text-danger">*</span></label>
+                  <input className="form-control" readOnly type="text" defaultValue={2} />
+                </div>
+                <div className="form-group">
+                  <label>Remaining Leaves <span className="text-danger">*</span></label>
+                  <input className="form-control" readOnly defaultValue={12} type="text" />
+                </div>
+                <div className="form-group">
+                  <label>Leave Reason <span className="text-danger">*</span></label>
+                  <textarea rows={4} className="form-control" defaultValue={"Going to hospital"} />
+                </div>
+                <div className="submit-section">
+                  <button className="btn btn-primary submit-btn">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* /Edit Leave Modal */}
+      {/* Delete Leave Modal */}
+      <DeleteLeave/>
+      {/* /Delete Leave Modal */}
+        </div>
+    </div> 
+  );
   }

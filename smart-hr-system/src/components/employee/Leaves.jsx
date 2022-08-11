@@ -71,7 +71,19 @@ export const Leaves = () => {
             </Link>
         </div>
         ),
-    }
+    },
+    {
+        title: 'Action',
+        render: (text, record) => (
+            <div className="dropdown dropdown-action text-end">
+              <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i className="material-icons">more_vert</i></a>
+                      <div className="dropdown-menu dropdown-menu-right">
+                        <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_leave"><i className="fa fa-pencil m-r-5" /> Edit</a>
+                        <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_approve"><i className="fa fa-trash-o m-r-5" /> Delete</a>
+                      </div>
+            </div>
+          ),
+      },
     ]
 
     const toggleMobileMenu = () => {
