@@ -17,7 +17,8 @@ Employees
 logged in user
 - View and create own leaves
 - View onw calendar and create events
-administrator 
+
+administrator - to log in as administrator use: email: admin@admin.com, password: 123456
 - anage employees data
 - View and approve leaves
 - View onw calendar and create events
