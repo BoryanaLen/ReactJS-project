@@ -30,7 +30,7 @@ administrator - to log in as administrator use: email: admin@admin.com, password
 - Firebase for the backend, user management, cloud data storage, and hosting.
 - Jest for making unit tests.
 
-# Client-side usage(PORT: 3000)
+# Usage(PORT: 3000)
 * $ npm i       // npm install packages
 * $ npm start   // run it locally
 * Runs the app in the development mode.
