@@ -4,13 +4,13 @@ import { Header } from '../common/Header';
 import { SidebarEmployee } from './Sidebar';
 import { AddLeave } from '../common/Leaves/AddLeave';
 import * as leavesService  from "../../services/leavesService";
-import uuid from 'react-uuid'
 import { AuthContext } from '../../contexts/AuthContext';
-
+import { EditLeave } from './EditLeave';
+import uuid from 'react-uuid'
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import "../../assets/css/antdstyle.css";
-import { EditLeave } from './EditLeave';
+
 
 export const Leaves = () => {
 
@@ -80,9 +80,9 @@ export const Leaves = () => {
     {
         title: 'Action',
         render: (text, record) => (
-            <div className="dropdown dropdown-action text-end">
-              <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true" ><i className="material-icons" onClick={() => leaveSetHandler(record)}>more_vert</i></a>
-                <div className="dropdown-menu dropdown-menu-right">
+            <div className="dropdown dropdown-action text-end" onClick={() => leaveSetHandler(record)}>
+              <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true" ><i className="material-icons" >more_vert</i></a>
+                <div className="dropdown-menu dropdown-menu-right" >
                     <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_leave"><i className="fa fa-pencil m-r-5" /> Edit</a>
                     <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_approve"><i className="fa fa-trash-o m-r-5" /> Delete</a>
                 </div>
@@ -121,7 +121,7 @@ export const Leaves = () => {
     function leaveUpdateHandler(updatedData){
         console.log(updatedData)
         leavesService
-        .updateLeave(updatedData.id)
+        .updateLeave(updatedData.id, updatedData)
         .then(data => {
             updateState(updatedData);
             closeHandler();
@@ -182,7 +182,7 @@ export const Leaves = () => {
             </div>
             </div>
 
-            <AddLeave 
+             <AddLeave 
                 onLeaveCreate={leaveCreateHandler}
             />
 
