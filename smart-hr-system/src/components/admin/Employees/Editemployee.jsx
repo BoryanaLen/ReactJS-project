@@ -10,7 +10,7 @@ import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
     onEmployeeEdit
   }) => {
 
-    const [values, setValues] = useState({...employeeData});
+    const [ values, setValues] = useState({...employeeData});
     const { role } = useContext(AuthContext);
     const [ file, setFile ] = useState();
     const [ url, setUrl ] = useState();
@@ -45,6 +45,8 @@ import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
             ...state,
             [e.target.name]: e.target.value
         }));
+
+        console.log(values)
     };
 
     function handleChange(event) {

@@ -10,24 +10,29 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import "../../assets/css/antdstyle.css";
+import { EditLeave } from './EditLeave';
 
 export const Leaves = () => {
 
-    const [loading, setLoading] = useState(false);
-    const [menu, setMenu] = useState(false)
-    const [leaves, setLeaves] = useState([]);   
+    const [ loading, setLoading] = useState(false);
+    const [ menu, setMenu] = useState(false)
+    const [ leaves, setLeaves] = useState([]);  
+    const [ currentLeave, setCurrentLeave ] = useState(null); 
     const { user} = useContext(AuthContext);
     const { role } = useContext(AuthContext);
 
     useEffect(() => {
         setLoading(true)
         leavesService
-            .getAllLeavesForUser()
-            .then((data) => {
-                const list = data.map(leave => leave.data())
-                setLeaves(list);
+        .getAllLeavesForUser()
+        .then((data) => {
+            const list = data.map(leave => {
+                return {...leave.data(), id: leave.id };
             })
-            .finally(() => setLoading(false))
+            setLeaves(list);
+            console.log(list)
+        })
+        .finally(() => setLoading(false))
     }, [])
 
     const columns = [
@@ -76,11 +81,11 @@ export const Leaves = () => {
         title: 'Action',
         render: (text, record) => (
             <div className="dropdown dropdown-action text-end">
-              <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i className="material-icons">more_vert</i></a>
-                      <div className="dropdown-menu dropdown-menu-right">
-                        <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_leave"><i className="fa fa-pencil m-r-5" /> Edit</a>
-                        <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_approve"><i className="fa fa-trash-o m-r-5" /> Delete</a>
-                      </div>
+              <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true" ><i className="material-icons" onClick={() => leaveSetHandler(record)}>more_vert</i></a>
+                <div className="dropdown-menu dropdown-menu-right">
+                    <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_leave"><i className="fa fa-pencil m-r-5" /> Edit</a>
+                    <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_approve"><i className="fa fa-trash-o m-r-5" /> Delete</a>
+                </div>
             </div>
           ),
       },
@@ -88,6 +93,17 @@ export const Leaves = () => {
 
     const toggleMobileMenu = () => {
         setMenu(!menu)
+    }
+
+    const closeHandler = () => {
+        setCurrentLeave( null );
+        console.log('clear set leave')
+    };
+
+    function leaveSetHandler(leave){
+       setCurrentLeave(leave);
+       console.log(leave)
+       console.log('set leave current')
     }
 
     function leaveCreateHandler (leaveData) {
@@ -101,6 +117,32 @@ export const Leaves = () => {
             console.log(err);
         });
     }
+
+    function leaveUpdateHandler(updatedData){
+        console.log(updatedData)
+        leavesService
+        .updateLeave(updatedData.id)
+        .then(data => {
+            updateState(updatedData);
+            closeHandler();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    
+    const updateState = (newData) => {
+        const newState = leaves.map(obj => {
+          if (obj.id === currentLeave.id) {
+            return {...obj, data: newData};
+          }
+          return obj;
+        });
+    
+        setLeaves(newState);
+      };
+
 
       return ( loading===false && role==="user" &&
         <div className={`main-wrapper ${menu ? 'slide-nav': ''}`}> 
@@ -123,14 +165,11 @@ export const Leaves = () => {
                         <button className="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_leave"><i className="fa fa-plus" /> Add Leave</button>
                         </div>
                     </div>
-                    <AddLeave 
-                    onLeaveCreate={leaveCreateHandler}
-                />
                 </div>
 
             {/* /Leave Statistics */}
             <div className="row">
-            <div className="col-md-12">
+                <div className="col-md-12">
                 <div className="table-responsive">               
                 <Table className="table-striped"
                     style = {{overflowX : 'auto'}}
@@ -142,7 +181,17 @@ export const Leaves = () => {
                 </div>
             </div>
             </div>
-        </div>
+
+            <AddLeave 
+                onLeaveCreate={leaveCreateHandler}
+            />
+
+            <EditLeave
+                leave={currentLeave}
+                onCancelAction = {closeHandler}
+                onLeaveEdit = {leaveUpdateHandler}
+            />
+            </div>
         </div>
     </div>
     );

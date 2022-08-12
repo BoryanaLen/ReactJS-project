@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const DeleteLeave = () => {
+export const DeleteLeave = ({
+    onLeaveDelete
+}) => {
     
     return ( 
       <div className="modal custom-modal fade" id="delete_approve" role="dialog">
@@ -14,7 +16,7 @@ export const DeleteLeave = () => {
               <div className="modal-btn delete-action">
                 <div className="row">
                   <div className="col-6">
-                    <a href="" className="btn btn-primary continue-btn">Delete</a>
+                    <button href="" className="btn btn-primary continue-btn" onClick={onLeaveDelete}>Delete</button>
                   </div>
                   <div className="col-6">
                     <a href="" data-bs-dismiss="modal" className="btn btn-primary cancel-btn">Cancel</a>
