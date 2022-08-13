@@ -1,6 +1,6 @@
 # ReactJS-project
 
-![image](https://user-images.githubusercontent.com/44115110/184426812-e7c9e076-210a-45d1-abba-fd2d13ab20e0.png)
+![image](https://user-images.githubusercontent.com/44115110/184475349-dab86509-04fe-44bd-a087-93d2656319a9.png)
 
 # Idea
 Application for managing company information like employees, leaves, events and job positions. 
