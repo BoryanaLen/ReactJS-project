@@ -7,11 +7,13 @@ Application for managing company information like employees, leaves, events and 
 
 # Design
 Administration
+- Dashboard
 - Calendar - Section for setting events
 - Employees - Section for managing employees data (create, read, update, delete)
 - Leaves - Section for viewing and approving leaves
 - Jobs - Section for managing job offers
 Employees
+- Dashboard
 - Calendar - Section for setting events
 - Leaves - Section for craeting leaves
 
@@ -25,6 +27,7 @@ administrator - to log in as administrator use: email: admin@admin.com, password
 - View and approve leaves
 - View onw calendar and create events
 - Manage job offfers
+- View candidates
 *Not authorized users are able apply for a job
 
 # Techniques used
@@ -37,3 +40,4 @@ administrator - to log in as administrator use: email: admin@admin.com, password
 * $ npm start   // run it locally
 * Runs the app in the development mode.
 * Open http://localhost:3000 to view it in the browser.
+* deployed: https://hr-smart-system.web.app
