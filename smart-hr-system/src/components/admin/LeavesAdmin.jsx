@@ -1,16 +1,16 @@
 import React, { useState,useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import uuid from 'react-uuid'
-import * as leavesService  from "../../services/leavesService";
-import * as employeeService  from "../../services/employeeService";
-import * as usersService from '../../services/usersService'
-import 'antd/dist/antd.css';
-import "../../assets/css/antdstyle.css";
 import { Table } from 'antd';
 import { Header } from '../common/Header'
 import { SidebarAdmin }from '../admin/SidebarAdmin'
 import { AddLeave }from '../common/Leaves/AddLeave'
 import { AuthContext } from '../../contexts/AuthContext';
+import uuid from 'react-uuid'
+import 'antd/dist/antd.css';
+import "../../assets/css/antdstyle.css";
+import * as leavesService  from "../../services/leavesService";
+import * as employeeService  from "../../services/employeeService";
+import * as usersService from '../../services/usersService'
 
 
 export const LeaveAdmin = () => {
@@ -32,44 +32,13 @@ export const LeaveAdmin = () => {
         .getAllLeaves()
         .then((data) => {
             const list = data.map(leave => {
-                const name = getEmployeeFullName(leave.data().userId)
-                console.log(name)
-                return { ...leave.data(), id: leave.id, fullName: name }
+                return {...leave.data(), id: leave.id };
             })
-
-            setData(list)
-            console.log(list);
+            setData(list);
+            console.log(list)
         })
-        .finally(() => setLoading(false))       
+        .finally(() => setLoading(false))    
     }, [])
-
-
-     function getEmployeeFullName(email){
-       const user = usersService
-        .getAllUsers()
-        .then(u => {
-            if (u.email === email) {
-                console.log(u.data())
-                return u.data()            
-            }
-        })
-
-       const empl = employeeService
-        .getAllEmployees()
-        .then(e => {
-            const names = e.map(empl => {
-                if (empl.data().email === email) {
-                
-                    console.log(empl.data().firstName)
-                   return e.firstName         
-                }
-            })
-            
-        })
-
-        console.log(empl)
-        return empl
-    }
 
 
     function leaveCreateHandler (leaveData) {
@@ -198,34 +167,6 @@ export const LeaveAdmin = () => {
                 </div>
                 </div>
                 {/* /Page Header */}
-                {/* Leave Statistics */}
-                <div className="row">
-                <div className="col-md-3">
-                    <div className="stats-info">
-                    <h6>Today Presents</h6>
-                    <h4>12 / 60</h4>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="stats-info">
-                    <h6>Planned Leaves</h6>
-                    <h4>8 <span>Today</span></h4>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="stats-info">
-                    <h6>Unplanned Leaves</h6>
-                    <h4>0 <span>Today</span></h4>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="stats-info">
-                    <h6>Pending Requests</h6>
-                    <h4>12</h4>
-                    </div>
-                </div>
-                </div>
-                {/* /Leave Statistics */}
 
                 <div className="row">
                 <div className="col-md-12">

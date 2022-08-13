@@ -38,12 +38,6 @@ export const CandidateList = () => {
     {
         title: 'Name',
         dataIndex: 'name',
-        render: (text, record) => (            
-            <h2 className="table-avatar">
-            <Link to="/app/profile/employee-profile" className="avatar"><img alt="" src={record.image} /></Link>
-            <Link to="/app/profile/employee-profile">{text}</Link>
-            </h2>
-        ), 
         sorter: (a, b) => a.name.length - b.name.length,
     },
     {
@@ -57,7 +51,7 @@ export const CandidateList = () => {
         sorter: (a, b) => a.createddate.length - b.createddate.length,
     },
     {
-        title: 'cv',
+        title: 'Cv file',
         dataIndex: 'cvUrl',
         render: (text, record) => (
             <div className="action-label">
@@ -65,19 +59,8 @@ export const CandidateList = () => {
             </div> 
             ),
         sorter: (a, b) => a.createddate.length - b.createddate.length,
-    },
-    {
-        title: 'Action',
-        render: (text, record) => (
-        <div className="dropdown dropdown-action text-center">
-            <a href="#" className="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i className="material-icons">more_vert</i></a>
-            <div className="dropdown-menu dropdown-menu-right">
-            <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_job"><i className="fa fa-pencil m-r-5" /> Edit</a>
-            <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_job"><i className="fa fa-trash-o m-r-5" /> Delete</a>
-            </div>
-        </div>
-        ), 
-    },    
+    }
+
     ]
       
        return ( loading===false && role==="admin" &&

@@ -179,7 +179,7 @@ export const DashboardContent  = () => {
                     <tbody>
                     { leaves && leaves.slice(0, 5).map((leave, index) => (
                         <tr key={index}>
-                            <td>{leave.data.firstName}</td>
+                            <td>{leave.data.fullName}</td>
                             <td>{leave.data.leaveType}</td>
                             <td>{leave.data.from}</td>
                             <td>{leave.data.to}</td>

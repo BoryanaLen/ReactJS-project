@@ -10,6 +10,7 @@ import uuid from 'react-uuid'
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import "../../assets/css/antdstyle.css";
+import * as employeeService  from "../../services/employeeService";
 
 
 export const Leaves = () => {
@@ -108,14 +109,24 @@ export const Leaves = () => {
 
     function leaveCreateHandler (leaveData) {
         leaveData.userId = user.user.uid
-        leavesService
-        .addLeave(leaveData)
-        .then(doc => {
-            setLeaves(oldLeaves => [...oldLeaves, leaveData]);
+
+        console.log(user.user);
+        employeeService
+            .getEmployeeByEmail(user.user.email)
+            .then(e => {
+
+                leaveData.fullName = e.firstName + " " + e.lastName
+
+                leavesService
+                    .addLeave(leaveData)
+                    .then(doc => {
+                        console.log(leaveData)
+                        setLeaves(oldLeaves => [...oldLeaves, leaveData]);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
         })
-        .catch(err => {
-            console.log(err);
-        });
     }
 
     function leaveUpdateHandler(updatedData){

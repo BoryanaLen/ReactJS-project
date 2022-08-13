@@ -10,6 +10,14 @@ export const isUserAdmin = async () => {
     return  await requester.isUserAdmin();
 }
 
+export const getUserById = async (id) => {   
+    const list =  await requester.getAll(dataCollection);
+    const found = list.find(obj => {
+        return obj.data().userId=== id;
+    });
+    return found.data()
+}
+
 export const getAllUsers = async () => {   
     return await requester.getAll(dataCollection);
 }

@@ -11,8 +11,15 @@ export const getCurrentEmployee = async () => {
     const list =  await requester.getAll(dataCollection);
     const found = list.find(obj => {
         return obj.data().email=== user.email;
-      });
-    console.log(found.data())
+    });
+    return found.data()
+}
+
+export const getEmployeeByEmail = async (email) => {   
+    const list =  await requester.getAll(dataCollection);
+    const found = list.find(obj => {
+        return obj.data().email=== email;
+    });
     return found.data()
 }
 
