@@ -68,10 +68,11 @@ export const SidebarAdmin = (props) => {
                 </li>
 
                 <li className="submenu">
-                <a href="#" className={isSideMenu === "jobs" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu ==="jobs" ? "": "jobs")}><i className="la la-briefcase" /> <span> Jobs </span> <span className="menu-arrow" /></a>
+                <a href="#" className={isSideMenu === "jobs" ? "subdrop" : ""} onClick={()=> toggleSidebar(isSideMenu ==="jobs" ? "": "jobs")}><i className="la la-briefcase" /> <span> Jobs/Candidates </span> <span className="menu-arrow" /></a>
                 { isSideMenu === "jobs" ? 
                 <ul>
-                  <li><Link className={pathname === ('/admin/jobs') ?"active" :""} to="/admin/jobs"> Manage Jobs </Link></li>             
+                  <li><Link className={pathname === ('/admin/jobs') ?"active" :""} to="/admin/jobs"> Manage Jobs </Link></li> 
+                  <li><Link className={pathname === ('/admin/candidates') ?"active" :""} to="/admin/candidates"> Candidates </Link></li>             
                 </ul>
                   :"" 
                 }

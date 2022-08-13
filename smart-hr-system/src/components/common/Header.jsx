@@ -59,7 +59,7 @@ import * as requester from '../../services/requester'
             </div>
 
             <div className="page-title-box">
-                <h3>Smart Hr System</h3>
+                <h3>Smart HR System</h3>
             </div>
 
             <div id="mobile_btn" className="mobile_btn" onClick={() => onMenuClik()}><i className="fa fa-bars" /></div>

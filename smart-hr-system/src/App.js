@@ -31,6 +31,7 @@ import { Profile } from './components/common/Profile';
 import { JobsList} from './components/jobs/JobsList';
 import { ManagedJobs } from './components/jobs/ManagedJobs';
 import { JobDetails } from './components/jobs/JobDetails';
+import { CandidateList } from './components/admin/CandidateList';
 
 function App() {
     
@@ -61,6 +62,7 @@ function App() {
                 <Route path="/admin/employees/attendance" element={< AttendanceAdmin />} />
                 <Route path="/admin/calendar" element={< Calendar />} />
                 <Route path="/admin/jobs" element={< ManagedJobs />} />
+                <Route path="/admin/candidates" element={< CandidateList />} />
 
                 <Route path="/employee/dashboard" element={< EmployeeDashboard />} />
                 <Route path="/employee/leaves" element={< Leaves />} />

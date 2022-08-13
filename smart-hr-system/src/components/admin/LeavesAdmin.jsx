@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import uuid from 'react-uuid'
 import * as leavesService  from "../../services/leavesService";
 import * as employeeService  from "../../services/employeeService";
+import * as usersService from '../../services/usersService'
 import 'antd/dist/antd.css';
 import "../../assets/css/antdstyle.css";
 import { Table } from 'antd';
@@ -15,7 +16,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 export const LeaveAdmin = () => {
 
     const [menu, setMenu] = useState(false);
-    const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [currentLeave, setCurrentLeave] = useState({});
@@ -27,26 +27,50 @@ export const LeaveAdmin = () => {
   
     useEffect(() => {
         setLoading(true)
+
         leavesService
-            .getAllLeaves()
-            .then((data) => {
-                const list = data.map(l => {
-                    return { ...l.data(), id: l.id };
-                })
-                setData(list)
-                console.log(list);
-            })
-            .finally(() => setLoading(false))
-        employeeService
-        .getAllEmployees()
+        .getAllLeaves()
         .then((data) => {
-            const list = data.map(empl => {
-                return { id: empl.id, data: empl.data() };
+            const list = data.map(leave => {
+                const name = getEmployeeFullName(leave.data().userId)
+                console.log(name)
+                return { ...leave.data(), id: leave.id, fullName: name }
             })
-            setEmployees(list)
+
+            setData(list)
+            console.log(list);
         })
-        .finally(() => setLoading(false))
+        .finally(() => setLoading(false))       
     }, [])
+
+
+     function getEmployeeFullName(email){
+       const user = usersService
+        .getAllUsers()
+        .then(u => {
+            if (u.email === email) {
+                console.log(u.data())
+                return u.data()            
+            }
+        })
+
+       const empl = employeeService
+        .getAllEmployees()
+        .then(e => {
+            const names = e.map(empl => {
+                if (empl.data().email === email) {
+                
+                    console.log(empl.data().firstName)
+                   return e.firstName         
+                }
+            })
+            
+        })
+
+        console.log(empl)
+        return empl
+    }
+
 
     function leaveCreateHandler (leaveData) {
         leavesService
@@ -97,12 +121,7 @@ export const LeaveAdmin = () => {
     const columns = [
     {
         title: 'Employee',
-        dataIndex: 'name',
-        render: (text, record) => (            
-            <h2 className="table-avatar">
-            <Link to="/app/profile/employee-profile" className="avatar"><img alt="" src={record.userIdl} /></Link>
-            </h2>
-        ), 
+        dataIndex: 'fullName',
         sorter: (a, b) => a.name.length - b.name.length,
     },
     {

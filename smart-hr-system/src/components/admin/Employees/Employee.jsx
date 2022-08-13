@@ -1,4 +1,3 @@
-import { Avatar_02 } from "../../../assets/imagepath"
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { AuthContext } from '../../../contexts/AuthContext';
