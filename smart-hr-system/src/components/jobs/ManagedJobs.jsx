@@ -1,6 +1,5 @@
 import React, { useState,useEffect, useContext } from 'react';
-import { Helmet } from "react-helmet";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
@@ -21,7 +20,6 @@ export const ManagedJobs = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const { role } = useContext(AuthContext);
-  
    
     useEffect(() => {
         setLoading(true)

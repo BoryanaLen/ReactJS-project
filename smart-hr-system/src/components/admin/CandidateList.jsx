@@ -46,8 +46,13 @@ export const CandidateList = () => {
         sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-        title: 'Created Date',
-        dataIndex: 'createddate',
+        title: 'Department',
+        dataIndex: 'department',
+        sorter: (a, b) => a.createddate.length - b.createddate.length,
+    },
+    {
+        title: 'Position',
+        dataIndex: 'jobTitle',
         sorter: (a, b) => a.createddate.length - b.createddate.length,
     },
     {

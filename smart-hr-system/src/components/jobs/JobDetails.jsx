@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { headerlogo } from '../../assets/imagepath'
 import { ApplyJob } from "./ApplyJob";
 import * as candidatesService from '../../services/candidatesService'
@@ -10,14 +10,19 @@ export const JobDetails = () => {
     const job = jobstate.job;
     console.log(job)
 
+    const navigate = useNavigate()
+
     function applyJobHandler (candidateData, url) {
         candidateData.jobId = job.id
         candidateData.cvUrl = url
-        console.log(candidateData)
+        candidateData.jobTitle = job.data.jobtitle
+        candidateData.department = job.data.department
+
         candidatesService
         .addCandidate(candidateData, true)
         .then(doc => {
-            console.log('candidate sdded')
+            console.log('candidate added')
+            navigate('/')
         })
         .catch(err => {
             console.log(err);
