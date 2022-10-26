@@ -40,4 +40,4 @@ administrator - to log in as administrator use: email: admin@admin.com, password
 * $ npm start   // run it locally
 * Runs the app in the development mode.
 * Open http://localhost:3000 to view it in the browser.
-* deployed: https://hr-smart-system.web.app
+* deployed: [https://hr-smart-system.web.app](https://smart-hr-system-104d5.web.app/)
